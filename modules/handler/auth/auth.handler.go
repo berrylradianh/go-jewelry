@@ -30,7 +30,11 @@ func (authHandler *Handler) LoginUser() echo.HandlerFunc {
 		if err := e.Validate(user); err != nil {
 			message := ""
 			for _, e := range err.(validator.ValidationErrors) {
-				message += fmt.Sprintf("%s is required ", e.Field())
+				if e.Tag() == "required" {
+					message = fmt.Sprintf("%s is required ", e.Field())
+				} else if e.Tag() == "email" {
+					message = "Invalid email address "
+				}
 			}
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
 				"message": message,

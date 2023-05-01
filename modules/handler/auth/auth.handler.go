@@ -23,7 +23,7 @@ func (authHandler *Handler) LoginUser() echo.HandlerFunc {
 		if err := e.Bind(&user); err != nil {
 			return echo.NewHTTPError(http.StatusBadRequest, map[string]interface{}{
 				"message": "Invalid Request Body",
-				"error":   err.Error(),
+				// "errors":  err.Error(),
 			})
 		}
 
@@ -34,14 +34,14 @@ func (authHandler *Handler) LoginUser() echo.HandlerFunc {
 			}
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
 				"message": message,
-				"errors":  err.Error(),
+				// "errors":  err.Error(),
 			})
 		}
 
 		user, token, err := authHandler.Usecase.LoginUser(user.Email, user.Password)
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, echo.Map{
-				"error": err.Error(),
+				"message": err.Error(),
 			})
 		}
 

@@ -1,6 +1,8 @@
 package auth
 
 import (
+	"errors"
+
 	"github.com/berrylradianh/go-jewelry/middlewares"
 	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
 	ra "github.com/berrylradianh/go-jewelry/modules/repository/auth"
@@ -19,7 +21,8 @@ func (authUsecase *Usecase) LoginUser(email, password string) (*eu.User, string,
 
 	err = svc.VerifyPassword(user.Password, password)
 	if err != nil {
-		return nil, "", err
+		//lint:ignore ST1005 Reason for ignoring this linter
+		return nil, "", errors.New("Invalid Email or Password")
 	}
 
 	token, err := middlewares.CreateToken(int(user.ID), user.Email)

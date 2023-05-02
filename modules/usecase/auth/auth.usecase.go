@@ -32,3 +32,19 @@ func (authUsecase *Usecase) LoginUser(email, password string) (*eu.User, string,
 
 	return user, token, nil
 }
+
+func (authUsecase *Usecase) RegisterUser(user *eu.User) error {
+	hashedPassword, err := svc.HashPassword(user.Password)
+	if err != nil {
+		return err
+	}
+
+	user.Password = string(hashedPassword)
+
+	err = authUsecase.Repository.RegisterUser(user)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

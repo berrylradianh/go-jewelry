@@ -49,8 +49,8 @@ func InitRoutes() *echo.Echo {
 
 	account := e.Group("/account")
 	account.POST("/login", authHandler.LoginUser())
+	account.POST("/register", authHandler.RegisterUser())
 	account.POST("/logout", authHandler.LogoutUser())
-	// account.POST("/register", authHandler.RegisterUser())
 
 	return e
 }

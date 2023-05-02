@@ -42,14 +42,12 @@ func (authHandler *Handler) RegisterUser() echo.HandlerFunc {
 			})
 		}
 
-		hashedPassword, err := authHandler.Usecase.RegisterUser(user)
+		err := authHandler.Usecase.RegisterUser(user)
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, echo.Map{
 				"message": err.Error(),
 			})
 		}
-
-		user.Password = string(hashedPassword)
 
 		return e.JSON(http.StatusOK, map[string]interface{}{
 			"message": "Register Successfull",

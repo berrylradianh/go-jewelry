@@ -3,7 +3,6 @@ package products
 import (
 	ep "github.com/berrylradianh/go-jewelry/modules/entity/products"
 	rp "github.com/berrylradianh/go-jewelry/modules/repository/products"
-	"gorm.io/gorm"
 )
 
 type Usecase struct {
@@ -25,7 +24,7 @@ func (productUsecase *Usecase) CreateProduct(product *ep.Product) error {
 	return err
 }
 
-func (productUsecase *Usecase) UpdateProduct(id int, product *ep.Product) *gorm.DB {
+func (productUsecase *Usecase) UpdateProduct(id int, product *ep.Product) int64 {
 	result := productUsecase.Repository.UpdateProduct(id, product)
 	return result
 }

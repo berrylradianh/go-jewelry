@@ -32,9 +32,9 @@ func (authRepo *Repository) CreateProduct(product *ep.Product) error {
 	return result.Error
 }
 
-func (authRepo *Repository) UpdateProduct(id int, product *ep.Product) *gorm.DB {
+func (authRepo *Repository) UpdateProduct(id int, product *ep.Product) int64 {
 	result := authRepo.DB.Model(&product).Where("id = ?", id).Omit("UpdatedAt").Updates(&product)
-	return result
+	return result.RowsAffected
 }
 
 func (authRepo *Repository) DeleteProduct(id int) error {

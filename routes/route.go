@@ -1,9 +1,13 @@
 package routes
 
 import (
-	ah "github.com/berrylradianh/go-jewelry/modules/handler/auth"
-	ar "github.com/berrylradianh/go-jewelry/modules/repository/auth"
-	au "github.com/berrylradianh/go-jewelry/modules/usecase/auth"
+	ha "github.com/berrylradianh/go-jewelry/modules/handler/auth"
+	ra "github.com/berrylradianh/go-jewelry/modules/repository/auth"
+	ua "github.com/berrylradianh/go-jewelry/modules/usecase/auth"
+
+	hp "github.com/berrylradianh/go-jewelry/modules/handler/products"
+	rp "github.com/berrylradianh/go-jewelry/modules/repository/products"
+	up "github.com/berrylradianh/go-jewelry/modules/usecase/products"
 
 	db "github.com/berrylradianh/go-jewelry/databases"
 
@@ -14,23 +18,23 @@ import (
 )
 
 var (
-	// userRepo    user_repo.Repository
-	// userHandler user_handler.Handler
-	// userUsecase user_usecase.Usecase
+	authRepo    ra.Repository
+	authHandler ha.Handler
+	authUsecase ua.Usecase
 
-	authRepo    ar.Repository
-	authHandler ah.Handler
-	authUsecase au.Usecase
+	productRepo    rp.Repository
+	productHandler hp.Handler
+	productUsecase up.Usecase
 )
 
 func declare() {
-	// userRepo = user_repo.Repository{DB: db.DB}
-	// userUsecase = user_usecase.Usecase{Repo: userRepo}
-	// userHandler = user_handler.Handler{Usecase: userUsecase}
+	authRepo = ra.Repository{DB: db.DB}
+	authUsecase = ua.Usecase{Repository: authRepo}
+	authHandler = ha.Handler{Usecase: &authUsecase}
 
-	authRepo = ar.Repository{DB: db.DB}
-	authUsecase = au.Usecase{Repository: authRepo}
-	authHandler = ah.Handler{Usecase: &authUsecase}
+	productRepo = rp.Repository{DB: db.DB}
+	productUsecase = up.Usecase{Repository: productRepo}
+	productHandler = hp.Handler{Usecase: &productUsecase}
 }
 
 func InitRoutes() *echo.Echo {
@@ -40,17 +44,17 @@ func InitRoutes() *echo.Echo {
 	e := echo.New()
 	e.Validator = &svc.CustomValidator{Validator: validator.New()}
 
-	// user := e.Group("/users")
-	// user.GET("", userHandler.GetAllUsers())
-	// user.GET("/:id", userHandler.GetUser())
-	// user.POST("", userHandler.CreateUser())
-	// user.DELETE("/:id", userHandler.DeleteUser())
-	// user.PUT("/:id", userHandler.UpdateUser())
-
 	account := e.Group("/account")
 	account.POST("/login", authHandler.LoginUser())
 	account.POST("/register", authHandler.RegisterUser())
 	account.POST("/logout", authHandler.LogoutUser())
+
+	product := e.Group("/products")
+	product.GET("", productHandler.GetAllProducts())
+	product.GET("/:id", productHandler.GetProductById())
+	product.POST("", productHandler.CreateProduct())
+	product.PUT("/:id", productHandler.UpdateProduct())
+	product.DELETE("/:id", productHandler.DeleteProduct())
 
 	return e
 }

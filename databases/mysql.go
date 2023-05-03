@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	epc "github.com/berrylradianh/go-jewelry/modules/entity/product_categories"
 	ep "github.com/berrylradianh/go-jewelry/modules/entity/products"
 	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
 
@@ -32,7 +33,7 @@ func InitDB() {
 		port,
 		name,
 	)
-	
+
 	var err error
 	DB, err = gorm.Open(mysql.Open(connectionString), &gorm.Config{})
 	if err != nil {
@@ -44,5 +45,6 @@ func InitialMigration() {
 	DB.AutoMigrate(
 		&eu.User{},
 		&ep.Product{},
+		&epc.ProductCategory{},
 	)
 }

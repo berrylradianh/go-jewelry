@@ -9,6 +9,10 @@ import (
 	rp "github.com/berrylradianh/go-jewelry/modules/repository/products"
 	up "github.com/berrylradianh/go-jewelry/modules/usecase/products"
 
+	hpc "github.com/berrylradianh/go-jewelry/modules/handler/product_categories"
+	rpc "github.com/berrylradianh/go-jewelry/modules/repository/product_categories"
+	upc "github.com/berrylradianh/go-jewelry/modules/usecase/product_categories"
+
 	db "github.com/berrylradianh/go-jewelry/databases"
 
 	svc "github.com/berrylradianh/go-jewelry/modules/services"
@@ -25,6 +29,10 @@ var (
 	productRepo    rp.Repository
 	productHandler hp.Handler
 	productUsecase up.Usecase
+
+	productCategoryRepo    rpc.Repository
+	productCategoryHandler hpc.Handler
+	productCategoryUsecase upc.Usecase
 )
 
 func declare() {
@@ -35,6 +43,10 @@ func declare() {
 	productRepo = rp.Repository{DB: db.DB}
 	productUsecase = up.Usecase{Repository: productRepo}
 	productHandler = hp.Handler{Usecase: &productUsecase}
+
+	productCategoryRepo = rpc.Repository{DB: db.DB}
+	productCategoryUsecase = upc.Usecase{Repository: productCategoryRepo}
+	productCategoryHandler = hpc.Handler{Usecase: &productCategoryUsecase}
 }
 
 func InitRoutes() *echo.Echo {
@@ -55,6 +67,13 @@ func InitRoutes() *echo.Echo {
 	product.POST("", productHandler.CreateProduct())
 	product.PUT("/:id", productHandler.UpdateProduct())
 	product.DELETE("/:id", productHandler.DeleteProduct())
+
+	productCategory := e.Group("/products/categories")
+	productCategory.GET("", productCategoryHandler.GetAllProductCategories())
+	productCategory.GET("/:id", productCategoryHandler.GetProductCategoryById())
+	productCategory.POST("", productCategoryHandler.CreateProductCategory())
+	productCategory.PUT("/:id", productCategoryHandler.UpdateProductCategory())
+	productCategory.DELETE("/:id", productCategoryHandler.DeleteProductCategory())
 
 	return e
 }

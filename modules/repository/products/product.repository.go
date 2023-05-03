@@ -9,35 +9,35 @@ type Repository struct {
 	DB *gorm.DB
 }
 
-func (authRepo *Repository) GetAllProducts() (*[]ep.Product, error) {
+func (productRepo *Repository) GetAllProducts() (*[]ep.Product, error) {
 	var products []ep.Product
 	// result := repo.DB.Preload("Blogs", "deleted_at IS NULL").Find(&users)
-	// result := authRepo.DB.Preload("product_categories", "deleted_at IS NULL").Find(&products)
-	result := authRepo.DB.Find(&products)
+	// result := productRepo.DB.Preload("product_categories", "deleted_at IS NULL").Find(&products)
+	result := productRepo.DB.Find(&products)
 
 	return &products, result.Error
 }
 
-func (authRepo *Repository) GetProductById(id int) (*ep.Product, error) {
+func (productRepo *Repository) GetProductById(id int) (*ep.Product, error) {
 	var product ep.Product
 	// result := repo.DB.Preload("Blogs", "deleted_at IS NULL").Find(&users)
-	// result := authRepo.DB.Preload("product_categories", "deleted_at IS NULL").First(&product, id)
-	result := authRepo.DB.First(&product, id)
+	// result := productRepo.DB.Preload("product_categories", "deleted_at IS NULL").First(&product, id)
+	result := productRepo.DB.First(&product, id)
 
 	return &product, result.Error
 }
 
-func (authRepo *Repository) CreateProduct(product *ep.Product) error {
-	result := authRepo.DB.Create(&product)
+func (productRepo *Repository) CreateProduct(product *ep.Product) error {
+	result := productRepo.DB.Create(&product)
 	return result.Error
 }
 
-func (authRepo *Repository) UpdateProduct(id int, product *ep.Product) int64 {
-	result := authRepo.DB.Model(&product).Where("id = ?", id).Omit("UpdatedAt").Updates(&product)
+func (productRepo *Repository) UpdateProduct(id int, product *ep.Product) int64 {
+	result := productRepo.DB.Model(&product).Where("id = ?", id).Omit("UpdatedAt").Updates(&product)
 	return result.RowsAffected
 }
 
-func (authRepo *Repository) DeleteProduct(id int) error {
-	result := authRepo.DB.Delete(&ep.Product{}, id)
+func (productRepo *Repository) DeleteProduct(id int) error {
+	result := productRepo.DB.Delete(&ep.Product{}, id)
 	return result.Error
 }

@@ -24,9 +24,9 @@ func (productCategoryUsecase *Usecase) CreateProductCategory(productCategory *ep
 	return err
 }
 
-func (productCategoryUsecase *Usecase) UpdateProductCategory(id int, productCategory *epc.ProductCategory) int64 {
-	result := productCategoryUsecase.Repository.UpdateProductCategory(id, productCategory)
-	return result
+func (productCategoryUsecase *Usecase) UpdateProductCategory(id int, productCategory *epc.ProductCategory) error {
+	err := productCategoryUsecase.Repository.UpdateProductCategory(id, productCategory)
+	return err
 }
 
 func (productCategoryUsecase *Usecase) DeleteProductCategory(id int) error {

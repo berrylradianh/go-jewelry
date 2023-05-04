@@ -117,8 +117,8 @@ func (productHandler *Handler) UpdateProduct() echo.HandlerFunc {
 			})
 		}
 
-		result := productHandler.Usecase.UpdateProduct(int(product.ID), product)
-		if result == 0 {
+		err = productHandler.Usecase.UpdateProduct(int(product.ID), product)
+		if err != nil {
 			return e.JSON(http.StatusOK, map[string]interface{}{
 				"message": "Nothing Updated",
 			})

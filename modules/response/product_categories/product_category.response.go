@@ -1,8 +1,8 @@
 package product_categories
 
 type ProductCategoryResponse struct {
-	ID   int `json:"id,omitempty"`
-	Name string
+	ID   int    `json:"-"`
+	Name string `json:"name" form:"name"`
 }
 
 func (ProductCategoryResponse) TableName() string {

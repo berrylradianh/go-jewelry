@@ -117,8 +117,8 @@ func (productCategoryHandler *Handler) UpdateProductCategory() echo.HandlerFunc 
 			})
 		}
 
-		result := productCategoryHandler.Usecase.UpdateProductCategory(int(productCategory.ID), productCategory)
-		if result == 0 {
+		err = productCategoryHandler.Usecase.UpdateProductCategory(int(productCategory.ID), productCategory)
+		if err != nil {
 			return e.JSON(http.StatusOK, map[string]interface{}{
 				"message": "Nothing Updated",
 			})

@@ -24,7 +24,7 @@ func (productUsecase *Usecase) CreateProduct(product *ep.Product) error {
 	return err
 }
 
-func (productUsecase *Usecase) UpdateProduct(id int, product *ep.Product) int64 {
+func (productUsecase *Usecase) UpdateProduct(id int, product *ep.Product) error {
 	result := productUsecase.Repository.UpdateProduct(id, product)
 	return result
 }

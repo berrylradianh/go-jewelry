@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 
-	epc "github.com/berrylradianh/go-jewelry/modules/entity/product_categories"
 	ep "github.com/berrylradianh/go-jewelry/modules/entity/products"
 	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
 
@@ -44,7 +43,7 @@ func InitDB() {
 func InitialMigration() {
 	DB.AutoMigrate(
 		&eu.User{},
-		&epc.ProductCategory{},
+		&ep.ProductCategory{},
 		&ep.Product{},
 	)
 }

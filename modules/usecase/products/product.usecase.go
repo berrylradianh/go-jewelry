@@ -2,12 +2,7 @@ package products
 
 import (
 	ep "github.com/berrylradianh/go-jewelry/modules/entity/products"
-	rp "github.com/berrylradianh/go-jewelry/modules/repository/products"
 )
-
-type Usecase struct {
-	Repository rp.Repository
-}
 
 func (productUsecase *Usecase) GetAllProducts() (*[]ep.Product, error) {
 	products, err := productUsecase.Repository.GetAllProducts()

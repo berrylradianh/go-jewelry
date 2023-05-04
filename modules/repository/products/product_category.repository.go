@@ -1,19 +1,13 @@
-package product_categories
+package products
 
 import (
 	"fmt"
 
-	epc "github.com/berrylradianh/go-jewelry/modules/entity/product_categories"
 	ep "github.com/berrylradianh/go-jewelry/modules/entity/products"
-	"gorm.io/gorm"
 )
 
-type Repository struct {
-	DB *gorm.DB
-}
-
-func (productCategoryRepo *Repository) GetAllProductCategories() (*[]epc.ProductCategory, error) {
-	var productCategories []epc.ProductCategory
+func (productCategoryRepo *Repository) GetAllProductCategories() (*[]ep.ProductCategory, error) {
+	var productCategories []ep.ProductCategory
 	if err := productCategoryRepo.DB.Preload("Products", "deleted_at IS NULL").Find(&productCategories).Error; err != nil {
 		return nil, err
 	}
@@ -21,8 +15,8 @@ func (productCategoryRepo *Repository) GetAllProductCategories() (*[]epc.Product
 	return &productCategories, nil
 }
 
-func (productCategoryRepo *Repository) GetProductCategoryById(id int) (*epc.ProductCategory, error) {
-	var productCategory epc.ProductCategory
+func (productCategoryRepo *Repository) GetProductCategoryById(id int) (*ep.ProductCategory, error) {
+	var productCategory ep.ProductCategory
 	if err := productCategoryRepo.DB.Preload("Products", "deleted_at IS NULL").First(&productCategory, id).Error; err != nil {
 		return nil, err
 	}
@@ -30,7 +24,7 @@ func (productCategoryRepo *Repository) GetProductCategoryById(id int) (*epc.Prod
 	return &productCategory, nil
 }
 
-func (productCategoryRepo *Repository) CreateProductCategory(productCategory *epc.ProductCategory) error {
+func (productCategoryRepo *Repository) CreateProductCategory(productCategory *ep.ProductCategory) error {
 	if err := productCategoryRepo.DB.Create(&productCategory).Error; err != nil {
 		return err
 	}
@@ -38,7 +32,7 @@ func (productCategoryRepo *Repository) CreateProductCategory(productCategory *ep
 	return nil
 }
 
-func (productCategoryRepo *Repository) UpdateProductCategory(id int, productCategory *epc.ProductCategory) error {
+func (productCategoryRepo *Repository) UpdateProductCategory(id int, productCategory *ep.ProductCategory) error {
 	result := productCategoryRepo.DB.Model(&productCategory).Where("id = ?", id).Omit("UpdatedAt").Updates(&productCategory)
 	if result.Error != nil {
 		return result.Error
@@ -56,7 +50,7 @@ func (productCategoryRepo *Repository) DeleteProductCategory(id int) error {
 		return err
 	}
 
-	if err := productCategoryRepo.DB.Delete(&epc.ProductCategory{}, id).Error; err != nil {
+	if err := productCategoryRepo.DB.Delete(&ep.ProductCategory{}, id).Error; err != nil {
 		return err
 	}
 

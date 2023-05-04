@@ -6,14 +6,9 @@ import (
 	"strconv"
 
 	ep "github.com/berrylradianh/go-jewelry/modules/entity/products"
-	up "github.com/berrylradianh/go-jewelry/modules/usecase/products"
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
 )
-
-type Handler struct {
-	Usecase *up.Usecase
-}
 
 func (productHandler *Handler) GetAllProducts() echo.HandlerFunc {
 	return func(e echo.Context) error {

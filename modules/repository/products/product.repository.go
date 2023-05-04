@@ -4,12 +4,7 @@ import (
 	"fmt"
 
 	ep "github.com/berrylradianh/go-jewelry/modules/entity/products"
-	"gorm.io/gorm"
 )
-
-type Repository struct {
-	DB *gorm.DB
-}
 
 func (productRepo *Repository) GetAllProducts() (*[]ep.Product, error) {
 	var products []ep.Product

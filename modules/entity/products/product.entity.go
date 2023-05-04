@@ -1,7 +1,7 @@
 package products
 
 import (
-	pc "github.com/berrylradianh/go-jewelry/modules/response/product_categories"
+	pc "github.com/berrylradianh/go-jewelry/modules/response/products"
 	"gorm.io/gorm"
 )
 

@@ -1,4 +1,4 @@
-package product_categories
+package products
 
 type ProductCategoryResponse struct {
 	ID   int    `json:"-"`

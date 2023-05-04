@@ -1,4 +1,4 @@
-package product_categories
+package products
 
 import (
 	pr "github.com/berrylradianh/go-jewelry/modules/response/products"

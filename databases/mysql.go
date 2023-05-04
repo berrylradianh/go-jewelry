@@ -45,6 +45,7 @@ func InitialMigration() {
 		&eu.User{},
 		&ep.ProductCategory{},
 		&ep.ProductMaterial{},
+		&ep.ProductDescription{},
 		&ep.Product{},
 	)
 }

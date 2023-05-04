@@ -5,13 +5,8 @@ import (
 
 	"github.com/berrylradianh/go-jewelry/middlewares"
 	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
-	ra "github.com/berrylradianh/go-jewelry/modules/repository/auth"
 	svc "github.com/berrylradianh/go-jewelry/modules/services"
 )
-
-type Usecase struct {
-	Repository ra.Repository
-}
 
 func (authUsecase *Usecase) LoginUser(email, password string) (*eu.User, string, error) {
 	user, err := authUsecase.Repository.LoginUser(email)
@@ -31,20 +26,4 @@ func (authUsecase *Usecase) LoginUser(email, password string) (*eu.User, string,
 	}
 
 	return user, token, nil
-}
-
-func (authUsecase *Usecase) RegisterUser(user *eu.User) error {
-	hashedPassword, err := svc.HashPassword(user.Password)
-	if err != nil {
-		return err
-	}
-
-	user.Password = string(hashedPassword)
-
-	err = authUsecase.Repository.RegisterUser(user)
-	if err != nil {
-		return err
-	}
-
-	return nil
 }

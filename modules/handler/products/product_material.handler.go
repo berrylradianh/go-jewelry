@@ -6,15 +6,16 @@ import (
 	"strconv"
 
 	ep "github.com/berrylradianh/go-jewelry/modules/entity/products"
+
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
 )
 
-func (productHandler *Handler) GetAllProducts() echo.HandlerFunc {
+func (productMaterialHandler *Handler) GetAllProductMaterials() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var products *[]ep.Product
+		var productMaterials *[]ep.ProductMaterial
 
-		products, err := productHandler.Usecase.GetAllProducts()
+		productMaterials, err := productMaterialHandler.Usecase.GetAllProductMaterials()
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, echo.Map{
 				"message": err.Error(),
@@ -22,15 +23,15 @@ func (productHandler *Handler) GetAllProducts() echo.HandlerFunc {
 		}
 
 		return e.JSON(http.StatusOK, map[string]interface{}{
-			"message":  "Success Get All Products",
-			"products": products,
+			"message":           "Success Get All Product Materials",
+			"product_materials": productMaterials,
 		})
 	}
 }
 
-func (productHandler *Handler) GetProductById() echo.HandlerFunc {
+func (productMaterialHandler *Handler) GetProductMaterialById() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var product *ep.Product
+		var productMaterial *ep.ProductMaterial
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -38,7 +39,7 @@ func (productHandler *Handler) GetProductById() echo.HandlerFunc {
 			})
 		}
 
-		product, err = productHandler.Usecase.GetProductById(id)
+		productMaterial, err = productMaterialHandler.Usecase.GetProductMaterialById(id)
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, echo.Map{
 				"message": err.Error(),
@@ -46,23 +47,23 @@ func (productHandler *Handler) GetProductById() echo.HandlerFunc {
 		}
 
 		return e.JSON(http.StatusOK, map[string]interface{}{
-			"message": "Success Get Product",
-			"product": product,
+			"message":          "Success Get Product Material",
+			"product_material": productMaterial,
 		})
 	}
 }
 
-func (productHandler *Handler) CreateProduct() echo.HandlerFunc {
+func (productMaterialHandler *Handler) CreateProductMaterial() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var product *ep.Product
-		if err := e.Bind(&product); err != nil {
+		var productMaterial *ep.ProductMaterial
+		if err := e.Bind(&productMaterial); err != nil {
 			return echo.NewHTTPError(http.StatusBadRequest, map[string]interface{}{
 				"message": "Invalid Request Body",
 				// "errors":  err.Error(),
 			})
 		}
 
-		if err := e.Validate(product); err != nil {
+		if err := e.Validate(productMaterial); err != nil {
 			message := ""
 			for _, e := range err.(validator.ValidationErrors) {
 				if e.Tag() == "required" {
@@ -75,7 +76,7 @@ func (productHandler *Handler) CreateProduct() echo.HandlerFunc {
 			})
 		}
 
-		err := productHandler.Usecase.CreateProduct(product)
+		err := productMaterialHandler.Usecase.CreateProductMaterial(productMaterial)
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, echo.Map{
 				"message": err.Error(),
@@ -83,14 +84,14 @@ func (productHandler *Handler) CreateProduct() echo.HandlerFunc {
 		}
 
 		return e.JSON(http.StatusOK, map[string]interface{}{
-			"message": "Success Create Product",
+			"message": "Success Create Product Material",
 		})
 	}
 }
 
-func (productHandler *Handler) UpdateProduct() echo.HandlerFunc {
+func (productMaterialHandler *Handler) UpdateProductMaterial() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var product *ep.Product
+		var productMaterial *ep.ProductMaterial
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -98,21 +99,21 @@ func (productHandler *Handler) UpdateProduct() echo.HandlerFunc {
 			})
 		}
 
-		product, err = productHandler.Usecase.GetProductById(id)
+		productMaterial, err = productMaterialHandler.Usecase.GetProductMaterialById(id)
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, echo.Map{
 				"message": "Record Not Found",
 			})
 		}
 
-		if err := e.Bind(&product); err != nil {
+		if err := e.Bind(&productMaterial); err != nil {
 			return echo.NewHTTPError(http.StatusBadRequest, map[string]interface{}{
 				"message": "Invalid Request Body",
 				// "errors":  err.Error(),
 			})
 		}
 
-		err = productHandler.Usecase.UpdateProduct(int(product.ID), product)
+		err = productMaterialHandler.Usecase.UpdateProductMaterial(int(productMaterial.ID), productMaterial)
 		if err != nil {
 			return e.JSON(http.StatusOK, map[string]interface{}{
 				"message": "Nothing Updated",
@@ -120,14 +121,14 @@ func (productHandler *Handler) UpdateProduct() echo.HandlerFunc {
 		}
 
 		return e.JSON(http.StatusOK, map[string]interface{}{
-			"message": "Success Update Product",
+			"message": "Success Update Product Material",
 		})
 	}
 }
 
-func (productHandler *Handler) DeleteProduct() echo.HandlerFunc {
+func (productMaterialHandler *Handler) DeleteProductMaterial() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var product *ep.Product
+		var productMaterial *ep.ProductMaterial
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -135,14 +136,14 @@ func (productHandler *Handler) DeleteProduct() echo.HandlerFunc {
 			})
 		}
 
-		product, err = productHandler.Usecase.GetProductById(id)
+		productMaterial, err = productMaterialHandler.Usecase.GetProductMaterialById(id)
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, echo.Map{
 				"message": "Record Not Found",
 			})
 		}
 
-		err = productHandler.Usecase.DeleteProduct(int(product.ID))
+		err = productMaterialHandler.Usecase.DeleteProductMaterial(int(productMaterial.ID))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, echo.Map{
 				"message": err.Error(),
@@ -150,7 +151,7 @@ func (productHandler *Handler) DeleteProduct() echo.HandlerFunc {
 		}
 
 		return e.JSON(http.StatusOK, map[string]interface{}{
-			"message": "Success Delete Product",
+			"message": "Success Delete Product Material",
 		})
 	}
 }

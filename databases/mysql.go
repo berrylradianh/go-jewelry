@@ -44,6 +44,7 @@ func InitialMigration() {
 	DB.AutoMigrate(
 		&eu.User{},
 		&ep.ProductCategory{},
+		&ep.ProductMaterial{},
 		&ep.Product{},
 	)
 }

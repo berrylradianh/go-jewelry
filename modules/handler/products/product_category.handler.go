@@ -23,8 +23,8 @@ func (productCategoryHandler *Handler) GetAllProductCategories() echo.HandlerFun
 		}
 
 		return e.JSON(http.StatusOK, map[string]interface{}{
-			"message": "Success Get All Product Categories",
-			"users":   productCategories,
+			"message":            "Success Get All Product Categories",
+			"product_categories": productCategories,
 		})
 	}
 }
@@ -47,8 +47,8 @@ func (productCategoryHandler *Handler) GetProductCategoryById() echo.HandlerFunc
 		}
 
 		return e.JSON(http.StatusOK, map[string]interface{}{
-			"message": "Success Get Product Category",
-			"users":   productCategory,
+			"message":          "Success Get Product Category",
+			"product_category": productCategory,
 		})
 	}
 }

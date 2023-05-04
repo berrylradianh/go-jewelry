@@ -1,0 +1,13 @@
+package products
+
+import (
+	pr "github.com/berrylradianh/go-jewelry/modules/response/products"
+	"gorm.io/gorm"
+)
+
+type ProductMaterial struct {
+	*gorm.Model
+
+	Name     string               `json:"name" form:"name" validate:"required"`
+	Products []pr.ProductResponse `gorm:"foreignKey:Product_material_id" json:"products" form:"products"`
+}

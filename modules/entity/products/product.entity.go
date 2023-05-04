@@ -14,4 +14,6 @@ type Product struct {
 	Image_url           string  `json:"image_url" form:"image_url" validate:"required"`
 	Product_category_id int     `json:"product_category_id" form:"product_category_id" validate:"required"`
 	Product_category    pc.ProductCategoryResponse
+	Product_material_id int `json:"product_material_id" form:"product_material_id" validate:"required"`
+	Product_material    pc.ProductMaterialResponse
 }

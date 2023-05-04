@@ -29,6 +29,10 @@ var (
 	productCategoryRepo    rp.Repository
 	productCategoryHandler hp.Handler
 	productCategoryUsecase up.Usecase
+
+	productMaterialRepo    rp.Repository
+	productMaterialHandler hp.Handler
+	productMaterialUsecase up.Usecase
 )
 
 func declare() {
@@ -43,6 +47,10 @@ func declare() {
 	productCategoryRepo = rp.Repository{DB: db.DB}
 	productCategoryUsecase = up.Usecase{Repository: productCategoryRepo}
 	productCategoryHandler = hp.Handler{Usecase: &productCategoryUsecase}
+
+	productMaterialRepo = rp.Repository{DB: db.DB}
+	productMaterialUsecase = up.Usecase{Repository: productMaterialRepo}
+	productMaterialHandler = hp.Handler{Usecase: &productMaterialUsecase}
 }
 
 func InitRoutes() *echo.Echo {
@@ -70,6 +78,13 @@ func InitRoutes() *echo.Echo {
 	productCategory.POST("", productCategoryHandler.CreateProductCategory())
 	productCategory.PUT("/:id", productCategoryHandler.UpdateProductCategory())
 	productCategory.DELETE("/:id", productCategoryHandler.DeleteProductCategory())
+
+	productMaterial := e.Group("/products/materials")
+	productMaterial.GET("", productMaterialHandler.GetAllProductMaterials())
+	productMaterial.GET("/:id", productMaterialHandler.GetProductMaterialById())
+	productMaterial.POST("", productMaterialHandler.CreateProductMaterial())
+	productMaterial.PUT("/:id", productMaterialHandler.UpdateProductMaterial())
+	productMaterial.DELETE("/:id", productMaterialHandler.DeleteProductMaterial())
 
 	return e
 }

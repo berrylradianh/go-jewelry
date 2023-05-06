@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	er "github.com/berrylradianh/go-jewelry/modules/entity/roles"
-	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
 	"gorm.io/gorm"
 )
 
@@ -52,10 +51,6 @@ func (roleRepo *Repository) UpdateRole(id int, role *er.Role) error {
 }
 
 func (roleRepo *Repository) DeleteRole(id int) error {
-	if err := roleRepo.DB.Where("role_id = ?", id).Delete(&eu.User{}).Error; err != nil {
-		return err
-	}
-
 	if err := roleRepo.DB.Delete(&er.Role{}, id).Error; err != nil {
 		return err
 	}

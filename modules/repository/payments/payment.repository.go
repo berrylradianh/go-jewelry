@@ -13,7 +13,7 @@ type Repository struct {
 
 func (paymentRepo *Repository) GetAllPayments() (*[]ep.Payment, error) {
 	var payments []ep.Payment
-	if err := paymentRepo.DB.Find(&payments).Error; err != nil {
+	if err := paymentRepo.DB.Preload("Transaction", "deleted_at IS NULL").Find(&payments).Error; err != nil {
 		return nil, err
 	}
 
@@ -22,7 +22,7 @@ func (paymentRepo *Repository) GetAllPayments() (*[]ep.Payment, error) {
 
 func (paymentRepo *Repository) GetPaymentById(id int) (*ep.Payment, error) {
 	var payment ep.Payment
-	if err := paymentRepo.DB.First(&payment, id).Error; err != nil {
+	if err := paymentRepo.DB.Preload("Transaction", "deleted_at IS NULL").First(&payment, id).Error; err != nil {
 		return nil, err
 	}
 

@@ -7,6 +7,7 @@ import (
 	epm "github.com/berrylradianh/go-jewelry/modules/entity/payments"
 	ep "github.com/berrylradianh/go-jewelry/modules/entity/products"
 	er "github.com/berrylradianh/go-jewelry/modules/entity/roles"
+	et "github.com/berrylradianh/go-jewelry/modules/entity/transactions"
 	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
 
 	"gorm.io/driver/mysql"
@@ -52,5 +53,7 @@ func InitialMigration() {
 		eu.UserDetail{},
 		er.Role{},
 		epm.Payment{},
+		et.Transaction{},
+		et.TransactionDetail{},
 	)
 }

@@ -8,7 +8,7 @@ import (
 
 func (userRepo *Repository) GetAllUsers() (*[]eu.User, error) {
 	var users []eu.User
-	if err := userRepo.DB.Preload("User_detail", "deleted_at IS NULL").Preload("Role", "deleted_at IS NULL").Find(&users).Error; err != nil {
+	if err := userRepo.DB.Preload("User_detail", "deleted_at IS NULL").Preload("Transaction", "deleted_at IS NULL").Find(&users).Error; err != nil {
 		return nil, err
 	}
 
@@ -17,7 +17,7 @@ func (userRepo *Repository) GetAllUsers() (*[]eu.User, error) {
 
 func (userRepo *Repository) GetUserById(id int) (*eu.User, error) {
 	var user eu.User
-	if err := userRepo.DB.Preload("User_detail", "deleted_at IS NULL").Preload("Role", "deleted_at IS NULL").First(&user, id).Error; err != nil {
+	if err := userRepo.DB.Preload("User_detail", "deleted_at IS NULL").Preload("Transaction", "deleted_at IS NULL").First(&user, id).Error; err != nil {
 		return nil, err
 	}
 

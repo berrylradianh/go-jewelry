@@ -9,6 +9,14 @@ import (
 	rp "github.com/berrylradianh/go-jewelry/modules/repository/products"
 	up "github.com/berrylradianh/go-jewelry/modules/usecase/products"
 
+	hu "github.com/berrylradianh/go-jewelry/modules/handler/users"
+	ru "github.com/berrylradianh/go-jewelry/modules/repository/users"
+	uu "github.com/berrylradianh/go-jewelry/modules/usecase/users"
+
+	hr "github.com/berrylradianh/go-jewelry/modules/handler/roles"
+	rr "github.com/berrylradianh/go-jewelry/modules/repository/roles"
+	ur "github.com/berrylradianh/go-jewelry/modules/usecase/roles"
+
 	db "github.com/berrylradianh/go-jewelry/databases"
 
 	svc "github.com/berrylradianh/go-jewelry/modules/services"
@@ -37,6 +45,18 @@ var (
 	productDescriptionRepo    rp.Repository
 	productDescriptionHandler hp.Handler
 	productDescriptionUsecase up.Usecase
+
+	userRepo    ru.Repository
+	userHandler hu.Handler
+	userUsecase uu.Usecase
+
+	userDetailRepo    ru.Repository
+	userDetailHandler hu.Handler
+	userDetailUsecase uu.Usecase
+
+	roleRepo    rr.Repository
+	roleHandler hr.Handler
+	roleUsecase ur.Usecase
 )
 
 func declare() {
@@ -59,6 +79,18 @@ func declare() {
 	productDescriptionRepo = rp.Repository{DB: db.DB}
 	productDescriptionUsecase = up.Usecase{Repository: productDescriptionRepo}
 	productDescriptionHandler = hp.Handler{Usecase: &productDescriptionUsecase}
+
+	userRepo = ru.Repository{DB: db.DB}
+	userUsecase = uu.Usecase{Repository: userRepo}
+	userHandler = hu.Handler{Usecase: &userUsecase}
+
+	userDetailRepo = ru.Repository{DB: db.DB}
+	userDetailUsecase = uu.Usecase{Repository: userDetailRepo}
+	userDetailHandler = hu.Handler{Usecase: &userDetailUsecase}
+
+	roleRepo = rr.Repository{DB: db.DB}
+	roleUsecase = ur.Usecase{Repository: roleRepo}
+	roleHandler = hr.Handler{Usecase: &roleUsecase}
 }
 
 func InitRoutes() *echo.Echo {
@@ -99,6 +131,27 @@ func InitRoutes() *echo.Echo {
 	productDescription.GET("/:id", productDescriptionHandler.GetProductDescriptionById())
 	productDescription.POST("", productDescriptionHandler.CreateProductDescription())
 	productDescription.PUT("/:id", productDescriptionHandler.UpdateProductDescription())
+
+	user := e.Group("/users")
+	user.GET("", userHandler.GetAllUsers())
+	user.GET("/:id", userHandler.GetUserById())
+	user.POST("", userHandler.CreateUser())
+	user.PUT("/:id", userHandler.UpdateUser())
+	user.DELETE("/:id", userHandler.DeleteUser())
+
+	userDetail := e.Group("/users/details")
+	userDetail.GET("", userDetailHandler.GetAllUserDetails())
+	userDetail.GET("/:id", userDetailHandler.GetUserDetailById())
+	userDetail.POST("", userDetailHandler.CreateUserDetail())
+	userDetail.PUT("/:id", userDetailHandler.UpdateUserDetail())
+	userDetail.DELETE("/:id", userDetailHandler.DeleteUserDetail())
+
+	role := e.Group("/roles")
+	role.GET("", roleHandler.GetAllRoles())
+	role.GET("/:id", roleHandler.GetRoleById())
+	role.POST("", roleHandler.CreateRole())
+	role.PUT("/:id", roleHandler.UpdateRole())
+	role.DELETE("/:id", roleHandler.DeleteRole())
 
 	return e
 }

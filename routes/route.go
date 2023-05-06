@@ -17,6 +17,10 @@ import (
 	rr "github.com/berrylradianh/go-jewelry/modules/repository/roles"
 	ur "github.com/berrylradianh/go-jewelry/modules/usecase/roles"
 
+	hpm "github.com/berrylradianh/go-jewelry/modules/handler/payments"
+	rpm "github.com/berrylradianh/go-jewelry/modules/repository/payments"
+	upm "github.com/berrylradianh/go-jewelry/modules/usecase/payments"
+
 	db "github.com/berrylradianh/go-jewelry/databases"
 
 	svc "github.com/berrylradianh/go-jewelry/modules/services"
@@ -57,6 +61,10 @@ var (
 	roleRepo    rr.Repository
 	roleHandler hr.Handler
 	roleUsecase ur.Usecase
+
+	paymentRepo    rpm.Repository
+	paymentHandler hpm.Handler
+	paymentUsecase upm.Usecase
 )
 
 func declare() {
@@ -91,6 +99,10 @@ func declare() {
 	roleRepo = rr.Repository{DB: db.DB}
 	roleUsecase = ur.Usecase{Repository: roleRepo}
 	roleHandler = hr.Handler{Usecase: &roleUsecase}
+
+	paymentRepo = rpm.Repository{DB: db.DB}
+	paymentUsecase = upm.Usecase{Repository: paymentRepo}
+	paymentHandler = hpm.Handler{Usecase: &paymentUsecase}
 }
 
 func InitRoutes() *echo.Echo {
@@ -152,6 +164,13 @@ func InitRoutes() *echo.Echo {
 	role.POST("", roleHandler.CreateRole())
 	role.PUT("/:id", roleHandler.UpdateRole())
 	role.DELETE("/:id", roleHandler.DeleteRole())
+
+	payment := e.Group("/payments")
+	payment.GET("", paymentHandler.GetAllPayments())
+	payment.GET("/:id", paymentHandler.GetPaymentById())
+	payment.POST("", paymentHandler.CreatePayment())
+	payment.PUT("/:id", paymentHandler.UpdatePayment())
+	payment.DELETE("/:id", paymentHandler.DeletePayment())
 
 	return e
 }

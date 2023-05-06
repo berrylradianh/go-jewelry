@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	epm "github.com/berrylradianh/go-jewelry/modules/entity/payments"
 	ep "github.com/berrylradianh/go-jewelry/modules/entity/products"
 	er "github.com/berrylradianh/go-jewelry/modules/entity/roles"
 	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
@@ -50,5 +51,6 @@ func InitialMigration() {
 		eu.User{},
 		eu.UserDetail{},
 		er.Role{},
+		epm.Payment{},
 	)
 }

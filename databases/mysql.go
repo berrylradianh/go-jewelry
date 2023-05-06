@@ -5,6 +5,7 @@ import (
 	"os"
 
 	ep "github.com/berrylradianh/go-jewelry/modules/entity/products"
+	er "github.com/berrylradianh/go-jewelry/modules/entity/roles"
 	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
 
 	"gorm.io/driver/mysql"
@@ -42,10 +43,12 @@ func InitDB() {
 
 func InitialMigration() {
 	DB.AutoMigrate(
-		&eu.User{},
-		&ep.ProductCategory{},
-		&ep.ProductMaterial{},
-		&ep.ProductDescription{},
-		&ep.Product{},
+		ep.ProductCategory{},
+		ep.ProductDescription{},
+		ep.ProductMaterial{},
+		ep.Product{},
+		eu.User{},
+		eu.UserDetail{},
+		er.Role{},
 	)
 }

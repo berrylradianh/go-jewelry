@@ -12,12 +12,6 @@ type Repository struct {
 	DB *gorm.DB
 }
 
-func (roleRepo *Repository) Init() {
-	roleRepo.DB.AutoMigrate(
-		&er.Role{},
-	)
-}
-
 func (roleRepo *Repository) GetAllRoles() (*[]er.Role, error) {
 	var roles []er.Role
 	if err := roleRepo.DB.Preload("User", "deleted_at IS NULL").Find(&roles).Error; err != nil {

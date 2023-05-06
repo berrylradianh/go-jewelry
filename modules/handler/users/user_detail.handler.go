@@ -1,25 +1,20 @@
-package roles
+package users
 
 import (
 	"fmt"
 	"net/http"
 	"strconv"
 
-	er "github.com/berrylradianh/go-jewelry/modules/entity/roles"
-	ur "github.com/berrylradianh/go-jewelry/modules/usecase/roles"
+	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
 )
 
-type Handler struct {
-	Usecase *ur.Usecase
-}
-
-func (roleHandler *Handler) GetAllRoles() echo.HandlerFunc {
+func (UserDetailHandler *Handler) GetAllUserDetails() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var roles *[]er.Role
+		var userDetails *[]eu.UserDetail
 
-		roles, err := roleHandler.Usecase.GetAllRoles()
+		userDetails, err := UserDetailHandler.Usecase.GetAllUserDetails()
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, echo.Map{
 				"message": err.Error(),
@@ -27,15 +22,15 @@ func (roleHandler *Handler) GetAllRoles() echo.HandlerFunc {
 		}
 
 		return e.JSON(http.StatusOK, map[string]interface{}{
-			"message": "Success Get All Roles",
-			"roles":   roles,
+			"message":      "Success Get All User Details",
+			"user_details": userDetails,
 		})
 	}
 }
 
-func (roleHandler *Handler) GetRoleById() echo.HandlerFunc {
+func (UserDetailHandler *Handler) GetUserDetailById() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var role *er.Role
+		var userDetail *eu.UserDetail
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -43,7 +38,7 @@ func (roleHandler *Handler) GetRoleById() echo.HandlerFunc {
 			})
 		}
 
-		role, err = roleHandler.Usecase.GetRoleById(id)
+		userDetail, err = UserDetailHandler.Usecase.GetUserDetailById(id)
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, echo.Map{
 				"message": err.Error(),
@@ -51,23 +46,23 @@ func (roleHandler *Handler) GetRoleById() echo.HandlerFunc {
 		}
 
 		return e.JSON(http.StatusOK, map[string]interface{}{
-			"message": "Success Get Role",
-			"role":    role,
+			"message":     "Success Get User Detail",
+			"user_detail": userDetail,
 		})
 	}
 }
 
-func (roleHandler *Handler) CreateRole() echo.HandlerFunc {
+func (UserDetailHandler *Handler) CreateUserDetail() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var role *er.Role
-		if err := e.Bind(&role); err != nil {
+		var userDetail *eu.UserDetail
+		if err := e.Bind(&userDetail); err != nil {
 			return echo.NewHTTPError(http.StatusBadRequest, map[string]interface{}{
 				"message": "Invalid Request Body",
 				// "errors":  err.Error(),
 			})
 		}
 
-		if err := e.Validate(role); err != nil {
+		if err := e.Validate(userDetail); err != nil {
 			message := ""
 			for _, e := range err.(validator.ValidationErrors) {
 				if e.Tag() == "required" {
@@ -80,7 +75,7 @@ func (roleHandler *Handler) CreateRole() echo.HandlerFunc {
 			})
 		}
 
-		err := roleHandler.Usecase.CreateRole(role)
+		err := UserDetailHandler.Usecase.CreateUserDetail(userDetail)
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, echo.Map{
 				"message": err.Error(),
@@ -88,14 +83,14 @@ func (roleHandler *Handler) CreateRole() echo.HandlerFunc {
 		}
 
 		return e.JSON(http.StatusOK, map[string]interface{}{
-			"message": "Success Create Role",
+			"message": "Success Create User Detail",
 		})
 	}
 }
 
-func (roleHandler *Handler) UpdateRole() echo.HandlerFunc {
+func (UserDetailHandler *Handler) UpdateUserDetail() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var role *er.Role
+		var userDetail *eu.UserDetail
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -103,21 +98,21 @@ func (roleHandler *Handler) UpdateRole() echo.HandlerFunc {
 			})
 		}
 
-		role, err = roleHandler.Usecase.GetRoleById(id)
+		userDetail, err = UserDetailHandler.Usecase.GetUserDetailById(id)
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, echo.Map{
 				"message": "Record Not Found",
 			})
 		}
 
-		if err := e.Bind(&role); err != nil {
+		if err := e.Bind(&userDetail); err != nil {
 			return echo.NewHTTPError(http.StatusBadRequest, map[string]interface{}{
 				"message": "Invalid Request Body",
 				// "errors":  err.Error(),
 			})
 		}
 
-		err = roleHandler.Usecase.UpdateRole(int(role.ID), role)
+		err = UserDetailHandler.Usecase.UpdateUserDetail(int(userDetail.ID), userDetail)
 		if err != nil {
 			return e.JSON(http.StatusOK, map[string]interface{}{
 				"message": "Nothing Updated",
@@ -125,14 +120,14 @@ func (roleHandler *Handler) UpdateRole() echo.HandlerFunc {
 		}
 
 		return e.JSON(http.StatusOK, map[string]interface{}{
-			"message": "Success Update Role",
+			"message": "Success Update User Detail",
 		})
 	}
 }
 
-func (roleHandler *Handler) DeleteRole() echo.HandlerFunc {
+func (UserDetailHandler *Handler) DeleteUserDetail() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var role *er.Role
+		var userDetail *eu.UserDetail
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -140,14 +135,14 @@ func (roleHandler *Handler) DeleteRole() echo.HandlerFunc {
 			})
 		}
 
-		role, err = roleHandler.Usecase.GetRoleById(id)
+		userDetail, err = UserDetailHandler.Usecase.GetUserDetailById(id)
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, echo.Map{
 				"message": "Record Not Found",
 			})
 		}
 
-		err = roleHandler.Usecase.DeleteRole(int(role.ID))
+		err = UserDetailHandler.Usecase.DeleteUserDetail(int(userDetail.ID))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, echo.Map{
 				"message": err.Error(),
@@ -155,7 +150,7 @@ func (roleHandler *Handler) DeleteRole() echo.HandlerFunc {
 		}
 
 		return e.JSON(http.StatusOK, map[string]interface{}{
-			"message": "Success Delete Role",
+			"message": "Success Delete User Detail",
 		})
 	}
 }

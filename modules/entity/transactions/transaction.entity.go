@@ -3,18 +3,29 @@ package transactions
 import (
 	"time"
 
-	rt "github.com/berrylradianh/go-jewelry/modules/response/transactions"
-
 	"gorm.io/gorm"
 )
 
 type Transaction struct {
 	*gorm.Model
 
-	Date               time.Time                      `json:"date" form:"date"`
-	Status             string                         `json:"status" form:"status"` // Verified - Process - Canceled
-	Image_proof_url    string                         `json:"image_proof_url" form:"image_proof_url" validate:"required"`
-	User_id            int                            `json:"user_id,omitempty" form:"user_id" validate:"required"`
-	Payment_id         int                            `json:"payment_id,omitempty" form:"payment" validate:"required"`
-	Transaction_detail []rt.TransactionDetailResponse `gorm:"foreignKey:Transaction_id" json:"transaction_detail" form:"transaction_detail"`
+	Date               time.Time                   `json:"date" form:"date"`
+	Status             string                      `json:"status" form:"status"` // Verified - Process - Canceled
+	Image_proof_url    string                      `json:"image_proof_url" form:"image_proof_url" validate:"required"`
+	User_id            int                         `json:"user_id,omitempty" form:"user_id" validate:"required"`
+	Payment_id         int                         `json:"payment_id,omitempty" form:"payment" validate:"required"`
+	Transaction_detail []TransactionDetailResponse `gorm:"foreignKey:Transaction_id" json:"transaction_detail" form:"transaction_detail"`
+}
+
+type TransactionResponse struct {
+	ID              int       `json:"-"`
+	Date            time.Time `json:"date" form:"date"`
+	Status          string    `json:"status" form:"status"`
+	Image_proof_url string    `json:"image_proof_url" form:"image_proof_url"`
+	User_id         int       `json:"-" form:"-"`
+	Payment_id      int       `json:"-" form:"-"`
+}
+
+func (TransactionResponse) TableName() string {
+	return "transactions"
 }

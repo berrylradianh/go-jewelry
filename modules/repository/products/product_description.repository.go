@@ -8,7 +8,7 @@ import (
 
 func (productDescriptionRepo *Repository) GetAllProductDescriptions() (*[]ep.ProductDescription, error) {
 	var productDescriptions []ep.ProductDescription
-	if err := productDescriptionRepo.DB.Preload("Products", "deleted_at IS NULL").Find(&productDescriptions).Error; err != nil {
+	if err := productDescriptionRepo.DB.Preload("Product", "deleted_at IS NULL").Find(&productDescriptions).Error; err != nil {
 		return nil, err
 	}
 
@@ -17,7 +17,7 @@ func (productDescriptionRepo *Repository) GetAllProductDescriptions() (*[]ep.Pro
 
 func (productDescriptionRepo *Repository) GetProductDescriptionById(id int) (*ep.ProductDescription, error) {
 	var productDescription ep.ProductDescription
-	if err := productDescriptionRepo.DB.Preload("Products", "deleted_at IS NULL").First(&productDescription, id).Error; err != nil {
+	if err := productDescriptionRepo.DB.Preload("Product", "deleted_at IS NULL").First(&productDescription, id).Error; err != nil {
 		return nil, err
 	}
 

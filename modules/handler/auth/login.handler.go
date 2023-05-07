@@ -6,7 +6,6 @@ import (
 	"time"
 
 	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
-	ra "github.com/berrylradianh/go-jewelry/modules/response/auth"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
@@ -53,7 +52,7 @@ func (authHandler *Handler) LoginUser() echo.HandlerFunc {
 
 		e.SetCookie(cookie)
 
-		authResponse := ra.AuthResponse{
+		authResponse := eu.AuthResponse{
 			ID:    int(user.ID),
 			Email: user.Email,
 			Token: token,

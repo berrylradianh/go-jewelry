@@ -1,7 +1,7 @@
 package payments
 
 import (
-	rt "github.com/berrylradianh/go-jewelry/modules/response/transactions"
+	et "github.com/berrylradianh/go-jewelry/modules/entity/transactions"
 	"gorm.io/gorm"
 )
 
@@ -9,5 +9,14 @@ type Payment struct {
 	*gorm.Model
 
 	Name        string                   `json:"name" form:"name" validate:"required"`
-	Transaction []rt.TransactionResponse `gorm:"foreignKey:Payment_id" json:"transaction" form:"transaction"`
+	Transaction []et.TransactionResponse `gorm:"foreignKey:Payment_id" json:"transaction" form:"transaction"`
+}
+
+type PaymentResponse struct {
+	ID   string `json:"-"`
+	Name string `json:"name,omitempty" form:"name"`
+}
+
+func (PaymentResponse) TableName() string {
+	return "payments"
 }

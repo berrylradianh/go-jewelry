@@ -8,8 +8,7 @@ import (
 
 func (productRepo *Repository) GetAllProducts() (*[]ep.Product, error) {
 	var products []ep.Product
-	// var productCategories []ep.ProductCategory
-	if err := productRepo.DB.Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Find(&products).Error; err != nil {
+	if err := productRepo.DB.Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Find(&products).Error; err != nil {
 		return nil, err
 	}
 

@@ -18,12 +18,11 @@ type Product struct {
 	Product_material    ProductMaterialResponse `gorm:"foreignKey:Product_material_id"`
 
 	Product_description ProductDescriptionResponse `gorm:"foreignKey:Product_id "`
-	// Product_description ProductDescriptionResponse     `gorm:"foreignKey:Product_description_id" json:"product_description" form:"product_description"`
 	// Transaction_detail  []et.TransactionDetailResponse `gorm:"foreignKey:Transaction_id" json:"transaction_detail,omitempty" form:"transaction_detail"`
 }
 
 type ProductResponse struct {
-	ID                  uint                 `json:"id,omitempty" form:"id"`
+	*gorm.Model         `json:"-"`
 	Name                string               `json:"name,omitempty" form:"name"`
 	Price               float64              `json:"price,omitempty" form:"price"`
 	Stock               int                  `json:"stock,omitempty" form:"stock"`

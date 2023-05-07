@@ -13,8 +13,8 @@ type ProductDescription struct {
 }
 
 type ProductDescriptionResponse struct {
-	ID          int    `json:"-"`
-	Description string `json:"description" form:"description"`
+	*gorm.Model `json:"-"`
+	Description string `json:"description,omitempty" form:"description"`
 	Product_id  uint   `json:"-"`
 }
 

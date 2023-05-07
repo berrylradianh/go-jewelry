@@ -6,7 +6,8 @@ import (
 
 	epm "github.com/berrylradianh/go-jewelry/modules/entity/payments"
 	ep "github.com/berrylradianh/go-jewelry/modules/entity/products"
-	er "github.com/berrylradianh/go-jewelry/modules/entity/roles"
+
+	// er "github.com/berrylradianh/go-jewelry/modules/entity/roles"
 	et "github.com/berrylradianh/go-jewelry/modules/entity/transactions"
 	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
 
@@ -51,7 +52,8 @@ func InitialMigration() {
 		ep.Product{},
 		eu.User{},
 		eu.UserDetail{},
-		er.Role{},
+		// er.Role{},
+		eu.Role{},
 		epm.Payment{},
 		et.Transaction{},
 		et.TransactionDetail{},

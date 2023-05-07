@@ -8,7 +8,7 @@ import (
 
 func (transactionDetailRepo *Repository) GetAllTransactionDetails() (*[]et.TransactionDetail, error) {
 	var transactionDetails []et.TransactionDetail
-	if err := transactionDetailRepo.DB.Find(&transactionDetails).Error; err != nil {
+	if err := transactionDetailRepo.DB.Preload("Transaction", "deleted_at IS NULL").Find(&transactionDetails).Error; err != nil {
 		return nil, err
 	}
 
@@ -17,7 +17,7 @@ func (transactionDetailRepo *Repository) GetAllTransactionDetails() (*[]et.Trans
 
 func (transactionDetailRepo *Repository) GetTransactionDetailById(id int) (*et.TransactionDetail, error) {
 	var transactionDetail et.TransactionDetail
-	if err := transactionDetailRepo.DB.First(&transactionDetail, id).Error; err != nil {
+	if err := transactionDetailRepo.DB.Preload("Transaction", "deleted_at IS NULL").First(&transactionDetail, id).Error; err != nil {
 		return nil, err
 	}
 

@@ -17,7 +17,7 @@ func (productRepo *Repository) GetAllProducts() (*[]ep.Product, error) {
 
 func (productRepo *Repository) GetProductById(id int) (*ep.Product, error) {
 	var product ep.Product
-	if err := productRepo.DB.Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").First(&product, id).Error; err != nil {
+	if err := productRepo.DB.Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").First(&product, id).Error; err != nil {
 		return nil, err
 	}
 

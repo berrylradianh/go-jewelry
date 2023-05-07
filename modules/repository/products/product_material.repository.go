@@ -46,10 +46,6 @@ func (productMaterialRepo *Repository) UpdateProductMaterial(id int, productMate
 }
 
 func (productMaterialRepo *Repository) DeleteProductMaterial(id int) error {
-	if err := productMaterialRepo.DB.Where("product_Material_id = ?", id).Delete(&ep.Product{}).Error; err != nil {
-		return err
-	}
-
 	if err := productMaterialRepo.DB.Delete(&ep.ProductMaterial{}, id).Error; err != nil {
 		return err
 	}

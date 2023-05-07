@@ -17,6 +17,14 @@ import (
 	rr "github.com/berrylradianh/go-jewelry/modules/repository/roles"
 	ur "github.com/berrylradianh/go-jewelry/modules/usecase/roles"
 
+	hpm "github.com/berrylradianh/go-jewelry/modules/handler/payments"
+	rpm "github.com/berrylradianh/go-jewelry/modules/repository/payments"
+	upm "github.com/berrylradianh/go-jewelry/modules/usecase/payments"
+
+	ht "github.com/berrylradianh/go-jewelry/modules/handler/transactions"
+	rt "github.com/berrylradianh/go-jewelry/modules/repository/transactions"
+	ut "github.com/berrylradianh/go-jewelry/modules/usecase/transactions"
+
 	db "github.com/berrylradianh/go-jewelry/databases"
 
 	svc "github.com/berrylradianh/go-jewelry/modules/services"
@@ -57,6 +65,18 @@ var (
 	roleRepo    rr.Repository
 	roleHandler hr.Handler
 	roleUsecase ur.Usecase
+
+	paymentRepo    rpm.Repository
+	paymentHandler hpm.Handler
+	paymentUsecase upm.Usecase
+
+	transactionRepo    rt.Repository
+	transactionHandler ht.Handler
+	transactionUsecase ut.Usecase
+
+	transactionDetailRepo    rt.Repository
+	transactionDetailHandler ht.Handler
+	transactionDetailUsecase ut.Usecase
 )
 
 func declare() {
@@ -91,6 +111,18 @@ func declare() {
 	roleRepo = rr.Repository{DB: db.DB}
 	roleUsecase = ur.Usecase{Repository: roleRepo}
 	roleHandler = hr.Handler{Usecase: &roleUsecase}
+
+	paymentRepo = rpm.Repository{DB: db.DB}
+	paymentUsecase = upm.Usecase{Repository: paymentRepo}
+	paymentHandler = hpm.Handler{Usecase: &paymentUsecase}
+
+	transactionRepo = rt.Repository{DB: db.DB}
+	transactionUsecase = ut.Usecase{Repository: transactionRepo}
+	transactionHandler = ht.Handler{Usecase: &transactionUsecase}
+
+	transactionDetailRepo = rt.Repository{DB: db.DB}
+	transactionDetailUsecase = ut.Usecase{Repository: transactionDetailRepo}
+	transactionDetailHandler = ht.Handler{Usecase: &transactionDetailUsecase}
 }
 
 func InitRoutes() *echo.Echo {
@@ -152,6 +184,27 @@ func InitRoutes() *echo.Echo {
 	role.POST("", roleHandler.CreateRole())
 	role.PUT("/:id", roleHandler.UpdateRole())
 	role.DELETE("/:id", roleHandler.DeleteRole())
+
+	payment := e.Group("/payments")
+	payment.GET("", paymentHandler.GetAllPayments())
+	payment.GET("/:id", paymentHandler.GetPaymentById())
+	payment.POST("", paymentHandler.CreatePayment())
+	payment.PUT("/:id", paymentHandler.UpdatePayment())
+	payment.DELETE("/:id", paymentHandler.DeletePayment())
+
+	transaction := e.Group("/transactions")
+	transaction.GET("", transactionHandler.GetAllTransactions())
+	transaction.GET("/:id", transactionHandler.GetTransactionById())
+	transaction.POST("", transactionHandler.CreateTransaction())
+	transaction.PUT("/:id", transactionHandler.UpdateTransaction())
+	transaction.DELETE("/:id", transactionHandler.DeleteTransaction())
+
+	transactionDetail := e.Group("/transactions/details")
+	transactionDetail.GET("", transactionDetailHandler.GetAllTransactionDetails())
+	transactionDetail.GET("/:id", transactionDetailHandler.GetTransactionDetailById())
+	transactionDetail.POST("", transactionDetailHandler.CreateTransactionDetail())
+	transactionDetail.PUT("/:id", transactionDetailHandler.UpdateTransactionDetail())
+	transactionDetail.DELETE("/:id", transactionDetailHandler.DeleteTransactionDetail())
 
 	return e
 }

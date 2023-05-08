@@ -45,6 +45,7 @@ func InitialMigration() {
 		e.ProductDescription{},
 		e.ProductMaterial{},
 		e.Product{},
+		e.Cart{},
 		e.User{},
 		e.UserDetail{},
 		e.Role{},

@@ -9,6 +9,10 @@ import (
 	rp "github.com/berrylradianh/go-jewelry/modules/repository/products"
 	up "github.com/berrylradianh/go-jewelry/modules/usecase/products"
 
+	hc "github.com/berrylradianh/go-jewelry/modules/handler/carts"
+	rc "github.com/berrylradianh/go-jewelry/modules/repository/carts"
+	uc "github.com/berrylradianh/go-jewelry/modules/usecase/carts"
+
 	hu "github.com/berrylradianh/go-jewelry/modules/handler/users"
 	ru "github.com/berrylradianh/go-jewelry/modules/repository/users"
 	uu "github.com/berrylradianh/go-jewelry/modules/usecase/users"
@@ -41,6 +45,10 @@ var (
 	productRepo    rp.Repository
 	productHandler hp.Handler
 	productUsecase up.Usecase
+
+	cartRepo    rc.Repository
+	cartHandler hc.Handler
+	cartUsecase uc.Usecase
 
 	productCategoryRepo    rp.Repository
 	productCategoryHandler hp.Handler
@@ -87,6 +95,10 @@ func declare() {
 	productRepo = rp.Repository{DB: db.DB}
 	productUsecase = up.Usecase{Repository: productRepo}
 	productHandler = hp.Handler{Usecase: &productUsecase}
+
+	cartRepo = rc.Repository{DB: db.DB}
+	cartUsecase = uc.Usecase{Repository: cartRepo}
+	cartHandler = hc.Handler{Usecase: &cartUsecase}
 
 	productCategoryRepo = rp.Repository{DB: db.DB}
 	productCategoryUsecase = up.Usecase{Repository: productCategoryRepo}
@@ -153,6 +165,13 @@ func InitRoutes() *echo.Echo {
 	productCategory.POST("", productCategoryHandler.CreateProductCategory())
 	productCategory.PUT("/:id", productCategoryHandler.UpdateProductCategory())
 	productCategory.DELETE("/:id", productCategoryHandler.DeleteProductCategory())
+
+	cart := e.Group("/carts")
+	cart.GET("", cartHandler.GetAllCarts())
+	cart.GET("/:id", cartHandler.GetCartById())
+	cart.POST("", cartHandler.CreateCart())
+	cart.PUT("/:id", cartHandler.UpdateCart())
+	cart.DELETE("/:id", cartHandler.DeleteCart())
 
 	productMaterial := e.Group("/products/materials")
 	productMaterial.GET("", productMaterialHandler.GetAllProductMaterials())

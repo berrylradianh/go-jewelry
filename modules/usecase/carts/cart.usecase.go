@@ -19,6 +19,11 @@ func (cartUsecase *Usecase) GetCartById(id int) (*e.Cart, error) {
 	return cart, err
 }
 
+func (cartUsecase *Usecase) FindProduct(id int) (*e.Product, error) {
+	product, err := cartUsecase.Repository.FindProduct(id)
+	return product, err
+}
+
 func (cartUsecase *Usecase) CreateCart(cart *e.Cart) error {
 	err := cartUsecase.Repository.CreateCart(cart)
 	return err

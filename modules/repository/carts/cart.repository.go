@@ -13,7 +13,7 @@ type Repository struct {
 
 func (cartRepo *Repository) GetAllCarts() (*[]e.Cart, error) {
 	var carts []e.Cart
-	if err := cartRepo.DB.Preload("Products", "deleted_at IS NULL").Find(&carts).Error; err != nil {
+	if err := cartRepo.DB.Preload("Product", "deleted_at IS NULL").Find(&carts).Error; err != nil {
 		return nil, err
 	}
 
@@ -22,11 +22,20 @@ func (cartRepo *Repository) GetAllCarts() (*[]e.Cart, error) {
 
 func (cartRepo *Repository) GetCartById(id int) (*e.Cart, error) {
 	var cart e.Cart
-	if err := cartRepo.DB.Preload("Products", "deleted_at IS NULL").First(&cart, id).Error; err != nil {
+	if err := cartRepo.DB.Preload("Product", "deleted_at IS NULL").First(&cart, id).Error; err != nil {
 		return nil, err
 	}
 
 	return &cart, nil
+}
+
+func (cartRepo *Repository) FindProduct(id int) (*e.Product, error) {
+	var product e.Product
+	if err := cartRepo.DB.First(&product).Error; err != nil {
+		return nil, err
+	}
+
+	return &product, nil
 }
 
 func (cartRepo *Repository) CreateCart(cart *e.Cart) error {

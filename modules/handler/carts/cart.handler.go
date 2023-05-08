@@ -81,7 +81,16 @@ func (cartHandler *Handler) CreateCart() echo.HandlerFunc {
 			})
 		}
 
-		err := cartHandler.Usecase.CreateCart(cart)
+		product, err := cartHandler.Usecase.FindProduct(int(cart.Product_id))
+		if err != nil {
+			return e.JSON(http.StatusBadRequest, echo.Map{
+				"message": err.Error(),
+			})
+		}
+
+		cart.Price = product.Price
+
+		err = cartHandler.Usecase.CreateCart(cart)
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, echo.Map{
 				"message": err.Error(),
@@ -147,6 +156,15 @@ func (cartHandler *Handler) DeleteCart() echo.HandlerFunc {
 				"message": "Record Not Found",
 			})
 		}
+
+		product, err := cartHandler.Usecase.FindProduct(int(cart.Product_id))
+		if err != nil {
+			return e.JSON(http.StatusBadRequest, echo.Map{
+				"message": err.Error(),
+			})
+		}
+
+		cart.Price = product.Price * float64(cart.Qty)
 
 		err = cartHandler.Usecase.DeleteCart(int(cart.ID))
 		if err != nil {

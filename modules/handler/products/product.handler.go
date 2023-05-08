@@ -5,14 +5,14 @@ import (
 	"net/http"
 	"strconv"
 
-	ep "github.com/berrylradianh/go-jewelry/modules/entity/products"
+	ent "github.com/berrylradianh/go-jewelry/modules/entity"
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
 )
 
 func (productHandler *Handler) GetAllProducts() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var products *[]ep.Product
+		var products *[]ent.Product
 
 		products, err := productHandler.Usecase.GetAllProducts()
 		if err != nil {
@@ -30,7 +30,7 @@ func (productHandler *Handler) GetAllProducts() echo.HandlerFunc {
 
 func (productHandler *Handler) GetProductById() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var product *ep.Product
+		var product *ent.Product
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -54,7 +54,7 @@ func (productHandler *Handler) GetProductById() echo.HandlerFunc {
 
 func (productHandler *Handler) CreateProduct() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var product *ep.Product
+		var product *ent.Product
 		if err := e.Bind(&product); err != nil {
 			return echo.NewHTTPError(http.StatusBadRequest, map[string]interface{}{
 				"message": "Invalid Request Body",
@@ -90,7 +90,7 @@ func (productHandler *Handler) CreateProduct() echo.HandlerFunc {
 
 func (productHandler *Handler) UpdateProduct() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var product *ep.Product
+		var product *ent.Product
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -127,7 +127,7 @@ func (productHandler *Handler) UpdateProduct() echo.HandlerFunc {
 
 func (productHandler *Handler) DeleteProduct() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var product *ep.Product
+		var product *ent.Product
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{

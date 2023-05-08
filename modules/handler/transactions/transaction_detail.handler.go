@@ -5,14 +5,14 @@ import (
 	"net/http"
 	"strconv"
 
-	et "github.com/berrylradianh/go-jewelry/modules/entity/transactions"
+	ent "github.com/berrylradianh/go-jewelry/modules/entity"
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
 )
 
 func (transactionDetailHandler *Handler) GetAllTransactionDetails() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var transactionDetails *[]et.TransactionDetail
+		var transactionDetails *[]ent.TransactionDetail
 
 		transactionDetails, err := transactionDetailHandler.Usecase.GetAllTransactionDetails()
 		if err != nil {
@@ -30,7 +30,7 @@ func (transactionDetailHandler *Handler) GetAllTransactionDetails() echo.Handler
 
 func (transactionDetailHandler *Handler) GetTransactionDetailById() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var transactionDetail *et.TransactionDetail
+		var transactionDetail *ent.TransactionDetail
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -54,7 +54,7 @@ func (transactionDetailHandler *Handler) GetTransactionDetailById() echo.Handler
 
 func (transactionDetailHandler *Handler) CreateTransactionDetail() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var transactionDetail *et.TransactionDetail
+		var transactionDetail *ent.TransactionDetail
 		if err := e.Bind(&transactionDetail); err != nil {
 			return echo.NewHTTPError(http.StatusBadRequest, map[string]interface{}{
 				"message": "Invalid Request Body",
@@ -75,7 +75,16 @@ func (transactionDetailHandler *Handler) CreateTransactionDetail() echo.HandlerF
 			})
 		}
 
-		err := transactionDetailHandler.Usecase.CreateTransactionDetail(transactionDetail)
+		product, err := transactionDetailHandler.Usecase.FindProduct(int(transactionDetail.Product_id))
+		if err != nil {
+			return e.JSON(http.StatusBadRequest, echo.Map{
+				"message": err.Error(),
+			})
+		}
+
+		transactionDetail.Price = product.Price * float64(transactionDetail.Qty)
+
+		err = transactionDetailHandler.Usecase.CreateTransactionDetail(transactionDetail)
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, echo.Map{
 				"message": err.Error(),
@@ -90,7 +99,7 @@ func (transactionDetailHandler *Handler) CreateTransactionDetail() echo.HandlerF
 
 func (transactionDetailHandler *Handler) UpdateTransactionDetail() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var transactionDetail *et.TransactionDetail
+		var transactionDetail *ent.TransactionDetail
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -127,7 +136,7 @@ func (transactionDetailHandler *Handler) UpdateTransactionDetail() echo.HandlerF
 
 func (transactionDetailHandler *Handler) DeleteTransactionDetail() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var transactionDetail *et.TransactionDetail
+		var transactionDetail *ent.TransactionDetail
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{

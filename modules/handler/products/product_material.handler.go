@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
-	ep "github.com/berrylradianh/go-jewelry/modules/entity/products"
+	ent "github.com/berrylradianh/go-jewelry/modules/entity"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
@@ -13,7 +13,7 @@ import (
 
 func (productMaterialHandler *Handler) GetAllProductMaterials() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var productMaterials *[]ep.ProductMaterial
+		var productMaterials *[]ent.ProductMaterial
 
 		productMaterials, err := productMaterialHandler.Usecase.GetAllProductMaterials()
 		if err != nil {
@@ -31,7 +31,7 @@ func (productMaterialHandler *Handler) GetAllProductMaterials() echo.HandlerFunc
 
 func (productMaterialHandler *Handler) GetProductMaterialById() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var productMaterial *ep.ProductMaterial
+		var productMaterial *ent.ProductMaterial
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -55,7 +55,7 @@ func (productMaterialHandler *Handler) GetProductMaterialById() echo.HandlerFunc
 
 func (productMaterialHandler *Handler) CreateProductMaterial() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var productMaterial *ep.ProductMaterial
+		var productMaterial *ent.ProductMaterial
 		if err := e.Bind(&productMaterial); err != nil {
 			return echo.NewHTTPError(http.StatusBadRequest, map[string]interface{}{
 				"message": "Invalid Request Body",
@@ -91,7 +91,7 @@ func (productMaterialHandler *Handler) CreateProductMaterial() echo.HandlerFunc 
 
 func (productMaterialHandler *Handler) UpdateProductMaterial() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var productMaterial *ep.ProductMaterial
+		var productMaterial *ent.ProductMaterial
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -128,7 +128,7 @@ func (productMaterialHandler *Handler) UpdateProductMaterial() echo.HandlerFunc 
 
 func (productMaterialHandler *Handler) DeleteProductMaterial() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var productMaterial *ep.ProductMaterial
+		var productMaterial *ent.ProductMaterial
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{

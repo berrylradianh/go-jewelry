@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
-	ep "github.com/berrylradianh/go-jewelry/modules/entity/payments"
+	ent "github.com/berrylradianh/go-jewelry/modules/entity"
 	up "github.com/berrylradianh/go-jewelry/modules/usecase/payments"
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
@@ -17,7 +17,7 @@ type Handler struct {
 
 func (paymentHandler *Handler) GetAllPayments() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var payments *[]ep.Payment
+		var payments *[]ent.Payment
 
 		payments, err := paymentHandler.Usecase.GetAllPayments()
 		if err != nil {
@@ -35,7 +35,7 @@ func (paymentHandler *Handler) GetAllPayments() echo.HandlerFunc {
 
 func (paymentHandler *Handler) GetPaymentById() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var payment *ep.Payment
+		var payment *ent.Payment
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -59,7 +59,7 @@ func (paymentHandler *Handler) GetPaymentById() echo.HandlerFunc {
 
 func (paymentHandler *Handler) CreatePayment() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var payment *ep.Payment
+		var payment *ent.Payment
 		if err := e.Bind(&payment); err != nil {
 			return echo.NewHTTPError(http.StatusBadRequest, map[string]interface{}{
 				"message": "Invalid Request Body",
@@ -95,7 +95,7 @@ func (paymentHandler *Handler) CreatePayment() echo.HandlerFunc {
 
 func (paymentHandler *Handler) UpdatePayment() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var payment *ep.Payment
+		var payment *ent.Payment
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -132,7 +132,7 @@ func (paymentHandler *Handler) UpdatePayment() echo.HandlerFunc {
 
 func (paymentHandler *Handler) DeletePayment() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var payment *ep.Payment
+		var payment *ent.Payment
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{

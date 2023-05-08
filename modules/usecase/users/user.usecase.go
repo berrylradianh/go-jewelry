@@ -1,21 +1,21 @@
 package users
 
 import (
-	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
+	e "github.com/berrylradianh/go-jewelry/modules/entity"
 	svc "github.com/berrylradianh/go-jewelry/modules/services"
 )
 
-func (userUsecase *Usecase) GetAllUsers() (*[]eu.User, error) {
+func (userUsecase *Usecase) GetAllUsers() (*[]e.User, error) {
 	users, err := userUsecase.Repository.GetAllUsers()
 	return users, err
 }
 
-func (userUsecase *Usecase) GetUserById(id int) (*eu.User, error) {
+func (userUsecase *Usecase) GetUserById(id int) (*e.User, error) {
 	user, err := userUsecase.Repository.GetUserById(id)
 	return user, err
 }
 
-func (userUsecase *Usecase) CreateUser(user *eu.User) error {
+func (userUsecase *Usecase) CreateUser(user *e.User) error {
 	hashedPassword, err := svc.HashPassword(user.Password)
 	if err != nil {
 		return err
@@ -31,7 +31,7 @@ func (userUsecase *Usecase) CreateUser(user *eu.User) error {
 	return nil
 }
 
-func (userUsecase *Usecase) UpdateUser(id int, user *eu.User) error {
+func (userUsecase *Usecase) UpdateUser(id int, user *e.User) error {
 	result := userUsecase.Repository.UpdateUser(id, user)
 	return result
 }

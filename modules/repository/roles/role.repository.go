@@ -3,7 +3,7 @@ package roles
 import (
 	"fmt"
 
-	er "github.com/berrylradianh/go-jewelry/modules/entity/roles"
+	e "github.com/berrylradianh/go-jewelry/modules/entity"
 	"gorm.io/gorm"
 )
 
@@ -11,25 +11,25 @@ type Repository struct {
 	DB *gorm.DB
 }
 
-func (roleRepo *Repository) GetAllRoles() (*[]er.Role, error) {
-	var roles []er.Role
-	if err := roleRepo.DB.Preload("User", "deleted_at IS NULL").Find(&roles).Error; err != nil {
+func (roleRepo *Repository) GetAllRoles() (*[]e.Role, error) {
+	var roles []e.Role
+	if err := roleRepo.DB.Preload("Users", "deleted_at IS NULL").Find(&roles).Error; err != nil {
 		return nil, err
 	}
 
 	return &roles, nil
 }
 
-func (roleRepo *Repository) GetRoleById(id int) (*er.Role, error) {
-	var role er.Role
-	if err := roleRepo.DB.Preload("User", "deleted_at IS NULL").First(&role, id).Error; err != nil {
+func (roleRepo *Repository) GetRoleById(id int) (*e.Role, error) {
+	var role e.Role
+	if err := roleRepo.DB.Preload("Users", "deleted_at IS NULL").First(&role, id).Error; err != nil {
 		return nil, err
 	}
 
 	return &role, nil
 }
 
-func (roleRepo *Repository) CreateRole(role *er.Role) error {
+func (roleRepo *Repository) CreateRole(role *e.Role) error {
 	if err := roleRepo.DB.Create(&role).Error; err != nil {
 		return err
 	}
@@ -37,7 +37,7 @@ func (roleRepo *Repository) CreateRole(role *er.Role) error {
 	return nil
 }
 
-func (roleRepo *Repository) UpdateRole(id int, role *er.Role) error {
+func (roleRepo *Repository) UpdateRole(id int, role *e.Role) error {
 	result := roleRepo.DB.Model(&role).Where("id = ?", id).Omit("UpdatedAt").Updates(&role)
 	if result.Error != nil {
 		return result.Error
@@ -51,7 +51,7 @@ func (roleRepo *Repository) UpdateRole(id int, role *er.Role) error {
 }
 
 func (roleRepo *Repository) DeleteRole(id int) error {
-	if err := roleRepo.DB.Delete(&er.Role{}, id).Error; err != nil {
+	if err := roleRepo.DB.Delete(&e.Role{}, id).Error; err != nil {
 		return err
 	}
 

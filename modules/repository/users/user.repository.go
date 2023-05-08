@@ -3,28 +3,28 @@ package users
 import (
 	"fmt"
 
-	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
+	e "github.com/berrylradianh/go-jewelry/modules/entity"
 )
 
-func (userRepo *Repository) GetAllUsers() (*[]eu.User, error) {
-	var users []eu.User
-	if err := userRepo.DB.Preload("User_detail", "deleted_at IS NULL").Preload("Transaction", "deleted_at IS NULL").Find(&users).Error; err != nil {
+func (userRepo *Repository) GetAllUsers() (*[]e.User, error) {
+	var users []e.User
+	if err := userRepo.DB.Preload("User_detail", "deleted_at IS NULL").Preload("Role", "deleted_at IS NULL").Find(&users).Error; err != nil {
 		return nil, err
 	}
 
 	return &users, nil
 }
 
-func (userRepo *Repository) GetUserById(id int) (*eu.User, error) {
-	var user eu.User
-	if err := userRepo.DB.Preload("User_detail", "deleted_at IS NULL").Preload("Transaction", "deleted_at IS NULL").First(&user, id).Error; err != nil {
+func (userRepo *Repository) GetUserById(id int) (*e.User, error) {
+	var user e.User
+	if err := userRepo.DB.Preload("User_detail", "deleted_at IS NULL").Preload("Role", "deleted_at IS NULL").First(&user, id).Error; err != nil {
 		return nil, err
 	}
 
 	return &user, nil
 }
 
-func (userRepo *Repository) CreateUser(user *eu.User) error {
+func (userRepo *Repository) CreateUser(user *e.User) error {
 	if err := userRepo.DB.Create(&user).Error; err != nil {
 		return err
 	}
@@ -32,25 +32,25 @@ func (userRepo *Repository) CreateUser(user *eu.User) error {
 	return nil
 }
 
-func (userRepo *Repository) UpdateUser(id int, user *eu.User) error {
+func (userRepo *Repository) UpdateUser(id int, user *e.User) error {
 	result := userRepo.DB.Model(&user).Where("id = ?", id).Omit("UpdatedAt").Updates(&user)
 	if result.Error != nil {
 		return result.Error
 	}
 
 	if result.RowsAffected == 0 {
-		return fmt.Errorf("product category with id %d not found", id)
+		return fmt.Errorf("nothing updated")
 	}
 
 	return nil
 }
 
 func (userRepo *Repository) DeleteUser(id int) error {
-	if err := userRepo.DB.Where("user_id = ?", id).Delete(&eu.UserDetail{}).Error; err != nil {
+	if err := userRepo.DB.Where("user_id = ?", id).Delete(&e.UserDetail{}).Error; err != nil {
 		return err
 	}
 
-	if err := userRepo.DB.Delete(&eu.User{}, id).Error; err != nil {
+	if err := userRepo.DB.Delete(&e.User{}, id).Error; err != nil {
 		return err
 	}
 

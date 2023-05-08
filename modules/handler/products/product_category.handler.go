@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
-	ep "github.com/berrylradianh/go-jewelry/modules/entity/products"
+	ent "github.com/berrylradianh/go-jewelry/modules/entity"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
@@ -13,7 +13,7 @@ import (
 
 func (productCategoryHandler *Handler) GetAllProductCategories() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var productCategories *[]ep.ProductCategory
+		var productCategories *[]ent.ProductCategory
 
 		productCategories, err := productCategoryHandler.Usecase.GetAllProductCategories()
 		if err != nil {
@@ -31,7 +31,7 @@ func (productCategoryHandler *Handler) GetAllProductCategories() echo.HandlerFun
 
 func (productCategoryHandler *Handler) GetProductCategoryById() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var productCategory *ep.ProductCategory
+		var productCategory *ent.ProductCategory
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -55,7 +55,7 @@ func (productCategoryHandler *Handler) GetProductCategoryById() echo.HandlerFunc
 
 func (productCategoryHandler *Handler) CreateProductCategory() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var productCategory *ep.ProductCategory
+		var productCategory *ent.ProductCategory
 		if err := e.Bind(&productCategory); err != nil {
 			return echo.NewHTTPError(http.StatusBadRequest, map[string]interface{}{
 				"message": "Invalid Request Body",
@@ -91,7 +91,7 @@ func (productCategoryHandler *Handler) CreateProductCategory() echo.HandlerFunc 
 
 func (productCategoryHandler *Handler) UpdateProductCategory() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var productCategory *ep.ProductCategory
+		var productCategory *ent.ProductCategory
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -128,7 +128,7 @@ func (productCategoryHandler *Handler) UpdateProductCategory() echo.HandlerFunc 
 
 func (productCategoryHandler *Handler) DeleteProductCategory() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var productCategory *ep.ProductCategory
+		var productCategory *ent.ProductCategory
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{

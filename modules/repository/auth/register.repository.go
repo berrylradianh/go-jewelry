@@ -1,12 +1,13 @@
 package auth
 
 import (
-	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
+	e "github.com/berrylradianh/go-jewelry/modules/entity"
 )
 
-func (authRepo *Repository) RegisterUser(user *eu.User) error {
-	// result := repo.DB.Preload("Blogs", "deleted_at IS NULL").Find(&users)
-	result := authRepo.DB.Create(&user)
+func (authRepo *Repository) RegisterUser(user *e.User) error {
+	if err := authRepo.DB.Create(&user).Error; err != nil {
+		return err
+	}
 
-	return result.Error
+	return nil
 }

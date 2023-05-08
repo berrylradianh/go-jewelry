@@ -4,11 +4,11 @@ import (
 	"errors"
 
 	"github.com/berrylradianh/go-jewelry/middlewares"
-	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
+	e "github.com/berrylradianh/go-jewelry/modules/entity"
 	svc "github.com/berrylradianh/go-jewelry/modules/services"
 )
 
-func (authUsecase *Usecase) LoginUser(email, password string) (*eu.User, string, error) {
+func (authUsecase *Usecase) LoginUser(email, password string) (*e.User, string, error) {
 	user, err := authUsecase.Repository.LoginUser(email)
 	if err != nil {
 		return nil, "", err

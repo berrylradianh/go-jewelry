@@ -3,20 +3,20 @@ package transactions
 import (
 	"time"
 
-	et "github.com/berrylradianh/go-jewelry/modules/entity/transactions"
+	e "github.com/berrylradianh/go-jewelry/modules/entity"
 )
 
-func (transactionUsecase *Usecase) GetAllTransactions() (*[]et.Transaction, error) {
+func (transactionUsecase *Usecase) GetAllTransactions() (*[]e.Transaction, error) {
 	transactions, err := transactionUsecase.Repository.GetAllTransactions()
 	return transactions, err
 }
 
-func (transactionUsecase *Usecase) GetTransactionById(id int) (*et.Transaction, error) {
+func (transactionUsecase *Usecase) GetTransactionById(id int) (*e.Transaction, error) {
 	transaction, err := transactionUsecase.Repository.GetTransactionById(id)
 	return transaction, err
 }
 
-func (transactionUsecase *Usecase) CreateTransaction(transaction *et.Transaction) error {
+func (transactionUsecase *Usecase) CreateTransaction(transaction *e.Transaction) error {
 	transaction.Date = time.Now()
 	transaction.Status = "Process"
 	err := transactionUsecase.Repository.CreateTransaction(transaction)
@@ -27,7 +27,7 @@ func (transactionUsecase *Usecase) CreateTransaction(transaction *et.Transaction
 	return nil
 }
 
-func (transactionUsecase *Usecase) UpdateTransaction(id int, transaction *et.Transaction) error {
+func (transactionUsecase *Usecase) UpdateTransaction(id int, transaction *e.Transaction) error {
 	result := transactionUsecase.Repository.UpdateTransaction(id, transaction)
 	return result
 }

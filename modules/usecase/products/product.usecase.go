@@ -1,6 +1,8 @@
 package products
 
 import (
+	"fmt"
+
 	e "github.com/berrylradianh/go-jewelry/modules/entity"
 )
 
@@ -27,4 +29,38 @@ func (productUsecase *Usecase) UpdateProduct(id int, product *e.Product) error {
 func (productUsecase *Usecase) DeleteProduct(id int) error {
 	err := productUsecase.Repository.DeleteProduct(id)
 	return err
+}
+
+func (productUsecase *Usecase) SortProducts(sortBy string, sortOrder string) (*[]e.Product, error) {
+	switch sortBy {
+	case "name":
+		if sortOrder == "asc" {
+			products, err := productUsecase.Repository.SortProductByNameASC()
+			if err != nil {
+				return nil, err
+			}
+			return products, nil
+		} else if sortOrder == "desc" {
+			products, err := productUsecase.Repository.SortProductByNameDESC()
+			if err != nil {
+				return nil, err
+			}
+			return products, nil
+		}
+	case "created_at":
+		if sortOrder == "asc" {
+			products, err := productUsecase.Repository.SortProductByDateASC()
+			if err != nil {
+				return nil, err
+			}
+			return products, nil
+		} else if sortOrder == "desc" {
+			products, err := productUsecase.Repository.SortProductByDateDESC()
+			if err != nil {
+				return nil, err
+			}
+			return products, nil
+		}
+	}
+	return nil, fmt.Errorf("invalid field for sorting or invalid sort order")
 }

@@ -195,3 +195,35 @@ func (productHandler *Handler) SortProducts() echo.HandlerFunc {
 		})
 	}
 }
+
+func (productHandler *Handler) FilterProducts() echo.HandlerFunc {
+	return func(e echo.Context) error {
+		var products *[]ent.Product
+		var err error
+
+		param := e.QueryParam("param")
+		switch param {
+		case "material":
+			material := e.QueryParam("material")
+			products, err = productHandler.Usecase.FilterProductsByMaterial(material)
+		case "category":
+			category := e.QueryParam("category")
+			products, err = productHandler.Usecase.FilterProductsByCategory(category)
+		default:
+			return e.JSON(http.StatusBadRequest, echo.Map{
+				"message": "Invalid filter parameter",
+			})
+		}
+
+		if err != nil {
+			return e.JSON(http.StatusBadRequest, echo.Map{
+				"message": err.Error(),
+			})
+		}
+
+		return e.JSON(http.StatusOK, map[string]interface{}{
+			"message":  "Success Get All Products",
+			"products": products,
+		})
+	}
+}

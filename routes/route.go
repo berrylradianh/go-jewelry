@@ -144,6 +144,7 @@ func InitRoutes() *echo.Echo {
 	product.PUT("/:id", productHandler.UpdateProduct())
 	product.DELETE("/:id", productHandler.DeleteProduct())
 	product.GET("/sorting", productHandler.SortProducts())
+	product.GET("/filter", productHandler.FilterProducts())
 
 	productCategory := e.Group("/products/categories")
 	productCategory.GET("", productCategoryHandler.GetAllProductCategories())

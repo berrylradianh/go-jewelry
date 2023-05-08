@@ -56,3 +56,39 @@ func (productRepo *Repository) DeleteProduct(id int) error {
 
 	return nil
 }
+
+func (productRepo *Repository) SortProductByNameASC() (*[]e.Product, error) {
+	var products []e.Product
+	if err := productRepo.DB.Order("name").Find(&products).Error; err != nil {
+		return nil, err
+	}
+
+	return &products, nil
+}
+
+func (productRepo *Repository) SortProductByNameDESC() (*[]e.Product, error) {
+	var products []e.Product
+	if err := productRepo.DB.Order("name DESC").Find(&products).Error; err != nil {
+		return nil, err
+	}
+
+	return &products, nil
+}
+
+func (productRepo *Repository) SortProductByDateASC() (*[]e.Product, error) {
+	var products []e.Product
+	if err := productRepo.DB.Order("created_at").Find(&products).Error; err != nil {
+		return nil, err
+	}
+
+	return &products, nil
+}
+
+func (productRepo *Repository) SortProductByDateDESC() (*[]e.Product, error) {
+	var products []e.Product
+	if err := productRepo.DB.Order("created_at DESC").Find(&products).Error; err != nil {
+		return nil, err
+	}
+
+	return &products, nil
+}

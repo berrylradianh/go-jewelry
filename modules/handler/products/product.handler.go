@@ -154,3 +154,44 @@ func (productHandler *Handler) DeleteProduct() echo.HandlerFunc {
 		})
 	}
 }
+
+func (productHandler *Handler) SortProducts() echo.HandlerFunc {
+	return func(e echo.Context) error {
+		var products *[]ent.Product
+		sortBy := e.QueryParam("sort")
+		sortOrder := e.QueryParam("order")
+
+		validSortFields := []string{"name", "created_at"}
+		isValidSortField := false
+		for _, field := range validSortFields {
+			if sortBy == field {
+				isValidSortField = true
+				break
+			}
+		}
+
+		if !isValidSortField {
+			return e.JSON(http.StatusBadRequest, map[string]interface{}{
+				"message": "Invalid sort parameter",
+			})
+		}
+
+		if sortOrder != "asc" && sortOrder != "desc" {
+			return e.JSON(http.StatusBadRequest, map[string]interface{}{
+				"message": "Invalid order parameter",
+			})
+		}
+
+		products, err := productHandler.Usecase.SortProducts(sortBy, sortOrder)
+		if err != nil {
+			return e.JSON(http.StatusInternalServerError, map[string]interface{}{
+				"message": "Failed to sort products",
+			})
+		}
+
+		return e.JSON(http.StatusOK, map[string]interface{}{
+			"message":  "Success Get All Products",
+			"products": products,
+		})
+	}
+}

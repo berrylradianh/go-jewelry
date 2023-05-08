@@ -15,8 +15,6 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
-        Username: ${{ secrets.USERNAME_github}}
-        Password: ${{ secrets.PASSWORD_github}}
         port: 22
         script: |
           cd app

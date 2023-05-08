@@ -110,3 +110,14 @@ func (productRepo *Repository) FilterProductsByCategory(productCategory string) 
 
 	return &products, nil
 }
+
+func (productRepo *Repository) SearchProductsByName(productName string) ([]e.Product, error) {
+	var products []e.Product
+
+	query := fmt.Sprintf("SELECT * FROM products WHERE name LIKE '%%%s%%'", productName)
+	if err := productRepo.DB.Find(&products, query).Error; err != nil {
+		return nil, err
+	}
+
+	return products, nil
+}

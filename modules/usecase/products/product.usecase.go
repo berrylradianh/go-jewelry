@@ -80,3 +80,11 @@ func (productUsecase *Usecase) FilterProductsByCategory(productCategory string) 
 	}
 	return products, nil
 }
+
+func (productUsecase *Usecase) SearchProductsByName(productName string) ([]e.Product, error) {
+	products, err := productUsecase.Repository.SearchProductsByName(productName)
+	if err != nil {
+		return nil, err
+	}
+	return products, nil
+}

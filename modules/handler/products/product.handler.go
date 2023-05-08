@@ -227,3 +227,26 @@ func (productHandler *Handler) FilterProducts() echo.HandlerFunc {
 		})
 	}
 }
+
+func (productHandler *Handler) SearchProductsByName() echo.HandlerFunc {
+	return func(e echo.Context) error {
+		productName := e.QueryParam("name")
+		if productName == "" {
+			return e.JSON(http.StatusBadRequest, map[string]interface{}{
+				"message": "Product name is required",
+			})
+		}
+
+		products, err := productHandler.Usecase.SearchProductsByName(productName)
+		if err != nil {
+			return e.JSON(http.StatusBadRequest, echo.Map{
+				"message": err.Error(),
+			})
+		}
+
+		return e.JSON(http.StatusOK, map[string]interface{}{
+			"message":  "Success Get All Products",
+			"products": products,
+		})
+	}
+}

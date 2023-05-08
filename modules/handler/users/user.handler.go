@@ -5,14 +5,14 @@ import (
 	"net/http"
 	"strconv"
 
-	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
+	ent "github.com/berrylradianh/go-jewelry/modules/entity"
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
 )
 
 func (UserHandler *Handler) GetAllUsers() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var users *[]eu.User
+		var users *[]ent.User
 
 		users, err := UserHandler.Usecase.GetAllUsers()
 		if err != nil {
@@ -30,7 +30,7 @@ func (UserHandler *Handler) GetAllUsers() echo.HandlerFunc {
 
 func (UserHandler *Handler) GetUserById() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var user *eu.User
+		var user *ent.User
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -54,7 +54,7 @@ func (UserHandler *Handler) GetUserById() echo.HandlerFunc {
 
 func (UserHandler *Handler) CreateUser() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var user *eu.User
+		var user *ent.User
 		if err := e.Bind(&user); err != nil {
 			return echo.NewHTTPError(http.StatusBadRequest, map[string]interface{}{
 				"message": "Invalid Request Body",
@@ -92,7 +92,7 @@ func (UserHandler *Handler) CreateUser() echo.HandlerFunc {
 
 func (UserHandler *Handler) UpdateUser() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var user *eu.User
+		var user *ent.User
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -129,7 +129,7 @@ func (UserHandler *Handler) UpdateUser() echo.HandlerFunc {
 
 func (UserHandler *Handler) DeleteUser() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var user *eu.User
+		var user *ent.User
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{

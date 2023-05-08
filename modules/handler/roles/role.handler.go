@@ -5,8 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
-	// er "github.com/berrylradianh/go-jewelry/modules/entity/roles"
-	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
+	ent "github.com/berrylradianh/go-jewelry/modules/entity"
 	ur "github.com/berrylradianh/go-jewelry/modules/usecase/roles"
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
@@ -18,7 +17,7 @@ type Handler struct {
 
 func (roleHandler *Handler) GetAllRoles() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var roles *[]eu.Role
+		var roles *[]ent.Role
 
 		roles, err := roleHandler.Usecase.GetAllRoles()
 		if err != nil {
@@ -36,7 +35,7 @@ func (roleHandler *Handler) GetAllRoles() echo.HandlerFunc {
 
 func (roleHandler *Handler) GetRoleById() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var role *eu.Role
+		var role *ent.Role
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -60,7 +59,7 @@ func (roleHandler *Handler) GetRoleById() echo.HandlerFunc {
 
 func (roleHandler *Handler) CreateRole() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var role *eu.Role
+		var role *ent.Role
 		if err := e.Bind(&role); err != nil {
 			return echo.NewHTTPError(http.StatusBadRequest, map[string]interface{}{
 				"message": "Invalid Request Body",
@@ -96,7 +95,7 @@ func (roleHandler *Handler) CreateRole() echo.HandlerFunc {
 
 func (roleHandler *Handler) UpdateRole() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var role *eu.Role
+		var role *ent.Role
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -133,7 +132,7 @@ func (roleHandler *Handler) UpdateRole() echo.HandlerFunc {
 
 func (roleHandler *Handler) DeleteRole() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var role *eu.Role
+		var role *ent.Role
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{

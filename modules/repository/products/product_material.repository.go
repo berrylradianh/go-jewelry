@@ -3,11 +3,11 @@ package products
 import (
 	"fmt"
 
-	ep "github.com/berrylradianh/go-jewelry/modules/entity/products"
+	e "github.com/berrylradianh/go-jewelry/modules/entity"
 )
 
-func (productMaterialRepo *Repository) GetAllProductMaterials() (*[]ep.ProductMaterial, error) {
-	var productMaterials []ep.ProductMaterial
+func (productMaterialRepo *Repository) GetAllProductMaterials() (*[]e.ProductMaterial, error) {
+	var productMaterials []e.ProductMaterial
 	if err := productMaterialRepo.DB.Preload("Products", "deleted_at IS NULL").Find(&productMaterials).Error; err != nil {
 		return nil, err
 	}
@@ -15,8 +15,8 @@ func (productMaterialRepo *Repository) GetAllProductMaterials() (*[]ep.ProductMa
 	return &productMaterials, nil
 }
 
-func (productMaterialRepo *Repository) GetProductMaterialById(id int) (*ep.ProductMaterial, error) {
-	var productMaterial ep.ProductMaterial
+func (productMaterialRepo *Repository) GetProductMaterialById(id int) (*e.ProductMaterial, error) {
+	var productMaterial e.ProductMaterial
 	if err := productMaterialRepo.DB.Preload("Products", "deleted_at IS NULL").First(&productMaterial, id).Error; err != nil {
 		return nil, err
 	}
@@ -24,7 +24,7 @@ func (productMaterialRepo *Repository) GetProductMaterialById(id int) (*ep.Produ
 	return &productMaterial, nil
 }
 
-func (productMaterialRepo *Repository) CreateProductMaterial(productMaterial *ep.ProductMaterial) error {
+func (productMaterialRepo *Repository) CreateProductMaterial(productMaterial *e.ProductMaterial) error {
 	if err := productMaterialRepo.DB.Create(&productMaterial).Error; err != nil {
 		return err
 	}
@@ -32,21 +32,21 @@ func (productMaterialRepo *Repository) CreateProductMaterial(productMaterial *ep
 	return nil
 }
 
-func (productMaterialRepo *Repository) UpdateProductMaterial(id int, productMaterial *ep.ProductMaterial) error {
+func (productMaterialRepo *Repository) UpdateProductMaterial(id int, productMaterial *e.ProductMaterial) error {
 	result := productMaterialRepo.DB.Model(&productMaterial).Where("id = ?", id).Omit("UpdatedAt").Updates(&productMaterial)
 	if result.Error != nil {
 		return result.Error
 	}
 
 	if result.RowsAffected == 0 {
-		return fmt.Errorf("product Material with id %d not found", id)
+		return fmt.Errorf("nothing updated")
 	}
 
 	return nil
 }
 
 func (productMaterialRepo *Repository) DeleteProductMaterial(id int) error {
-	if err := productMaterialRepo.DB.Delete(&ep.ProductMaterial{}, id).Error; err != nil {
+	if err := productMaterialRepo.DB.Delete(&e.ProductMaterial{}, id).Error; err != nil {
 		return err
 	}
 

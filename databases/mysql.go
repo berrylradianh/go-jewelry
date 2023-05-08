@@ -4,12 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	epm "github.com/berrylradianh/go-jewelry/modules/entity/payments"
-	ep "github.com/berrylradianh/go-jewelry/modules/entity/products"
-
-	// er "github.com/berrylradianh/go-jewelry/modules/entity/roles"
-	et "github.com/berrylradianh/go-jewelry/modules/entity/transactions"
-	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
+	e "github.com/berrylradianh/go-jewelry/modules/entity"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -46,16 +41,15 @@ func InitDB() {
 
 func InitialMigration() {
 	DB.AutoMigrate(
-		ep.ProductCategory{},
-		ep.ProductDescription{},
-		ep.ProductMaterial{},
-		ep.Product{},
-		eu.User{},
-		eu.UserDetail{},
-		// er.Role{},
-		eu.Role{},
-		epm.Payment{},
-		et.Transaction{},
-		et.TransactionDetail{},
+		e.ProductCategory{},
+		e.ProductDescription{},
+		e.ProductMaterial{},
+		e.Product{},
+		e.User{},
+		e.UserDetail{},
+		e.Role{},
+		e.Payment{},
+		e.Transaction{},
+		e.TransactionDetail{},
 	)
 }

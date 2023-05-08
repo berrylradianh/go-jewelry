@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
+	ent "github.com/berrylradianh/go-jewelry/modules/entity"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
@@ -13,7 +13,7 @@ import (
 
 func (authHandler *Handler) LoginUser() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var user *eu.User
+		var user *ent.User
 		if err := e.Bind(&user); err != nil {
 			return echo.NewHTTPError(http.StatusBadRequest, map[string]interface{}{
 				"message": "Invalid Request Body",
@@ -52,7 +52,7 @@ func (authHandler *Handler) LoginUser() echo.HandlerFunc {
 
 		e.SetCookie(cookie)
 
-		authResponse := eu.AuthResponse{
+		authResponse := ent.AuthResponse{
 			ID:    int(user.ID),
 			Email: user.Email,
 			Token: token,

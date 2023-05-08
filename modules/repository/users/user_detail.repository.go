@@ -3,11 +3,11 @@ package users
 import (
 	"fmt"
 
-	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
+	e "github.com/berrylradianh/go-jewelry/modules/entity"
 )
 
-func (userDetailRepo *Repository) GetAllUserDetails() (*[]eu.UserDetail, error) {
-	var userDetails []eu.UserDetail
+func (userDetailRepo *Repository) GetAllUserDetails() (*[]e.UserDetail, error) {
+	var userDetails []e.UserDetail
 	if err := userDetailRepo.DB.Preload("User", "deleted_at IS NULL").Find(&userDetails).Error; err != nil {
 		return nil, err
 	}
@@ -15,8 +15,8 @@ func (userDetailRepo *Repository) GetAllUserDetails() (*[]eu.UserDetail, error) 
 	return &userDetails, nil
 }
 
-func (userDetailRepo *Repository) GetUserDetailById(id int) (*eu.UserDetail, error) {
-	var UserDetail eu.UserDetail
+func (userDetailRepo *Repository) GetUserDetailById(id int) (*e.UserDetail, error) {
+	var UserDetail e.UserDetail
 	if err := userDetailRepo.DB.Preload("User", "deleted_at IS NULL").First(&UserDetail, id).Error; err != nil {
 		return nil, err
 	}
@@ -24,7 +24,7 @@ func (userDetailRepo *Repository) GetUserDetailById(id int) (*eu.UserDetail, err
 	return &UserDetail, nil
 }
 
-func (userDetailRepo *Repository) CreateUserDetail(UserDetail *eu.UserDetail) error {
+func (userDetailRepo *Repository) CreateUserDetail(UserDetail *e.UserDetail) error {
 	if err := userDetailRepo.DB.Create(&UserDetail).Error; err != nil {
 		return err
 	}
@@ -32,21 +32,21 @@ func (userDetailRepo *Repository) CreateUserDetail(UserDetail *eu.UserDetail) er
 	return nil
 }
 
-func (userDetailRepo *Repository) UpdateUserDetail(id int, UserDetail *eu.UserDetail) error {
+func (userDetailRepo *Repository) UpdateUserDetail(id int, UserDetail *e.UserDetail) error {
 	result := userDetailRepo.DB.Model(&UserDetail).Where("id = ?", id).Omit("UpdatedAt").Updates(&UserDetail)
 	if result.Error != nil {
 		return result.Error
 	}
 
 	if result.RowsAffected == 0 {
-		return fmt.Errorf("user detail with id %d not found", id)
+		return fmt.Errorf("nothing updated")
 	}
 
 	return nil
 }
 
 func (userDetailRepo *Repository) DeleteUserDetail(id int) error {
-	if err := userDetailRepo.DB.Delete(&eu.UserDetail{}, id).Error; err != nil {
+	if err := userDetailRepo.DB.Delete(&e.UserDetail{}, id).Error; err != nil {
 		return err
 	}
 

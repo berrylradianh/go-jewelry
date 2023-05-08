@@ -5,14 +5,14 @@ import (
 	"net/http"
 	"strconv"
 
-	et "github.com/berrylradianh/go-jewelry/modules/entity/transactions"
+	ent "github.com/berrylradianh/go-jewelry/modules/entity"
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
 )
 
 func (transactionHandler *Handler) GetAllTransactions() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var transactions *[]et.Transaction
+		var transactions *[]ent.Transaction
 
 		transactions, err := transactionHandler.Usecase.GetAllTransactions()
 		if err != nil {
@@ -30,7 +30,7 @@ func (transactionHandler *Handler) GetAllTransactions() echo.HandlerFunc {
 
 func (transactionHandler *Handler) GetTransactionById() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var transaction *et.Transaction
+		var transaction *ent.Transaction
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -54,7 +54,7 @@ func (transactionHandler *Handler) GetTransactionById() echo.HandlerFunc {
 
 func (transactionHandler *Handler) CreateTransaction() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var transaction *et.Transaction
+		var transaction *ent.Transaction
 		if err := e.Bind(&transaction); err != nil {
 			return echo.NewHTTPError(http.StatusBadRequest, map[string]interface{}{
 				"message": "Invalid Request Body",
@@ -90,7 +90,7 @@ func (transactionHandler *Handler) CreateTransaction() echo.HandlerFunc {
 
 func (transactionHandler *Handler) UpdateTransaction() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var transaction *et.Transaction
+		var transaction *ent.Transaction
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -127,7 +127,7 @@ func (transactionHandler *Handler) UpdateTransaction() echo.HandlerFunc {
 
 func (transactionHandler *Handler) DeleteTransaction() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var transaction *et.Transaction
+		var transaction *ent.Transaction
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{

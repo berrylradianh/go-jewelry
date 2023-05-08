@@ -5,14 +5,14 @@ import (
 	"net/http"
 	"strconv"
 
-	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
+	ent "github.com/berrylradianh/go-jewelry/modules/entity"
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
 )
 
 func (UserDetailHandler *Handler) GetAllUserDetails() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var userDetails *[]eu.UserDetail
+		var userDetails *[]ent.UserDetail
 
 		userDetails, err := UserDetailHandler.Usecase.GetAllUserDetails()
 		if err != nil {
@@ -30,7 +30,7 @@ func (UserDetailHandler *Handler) GetAllUserDetails() echo.HandlerFunc {
 
 func (UserDetailHandler *Handler) GetUserDetailById() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var userDetail *eu.UserDetail
+		var userDetail *ent.UserDetail
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -54,7 +54,7 @@ func (UserDetailHandler *Handler) GetUserDetailById() echo.HandlerFunc {
 
 func (UserDetailHandler *Handler) CreateUserDetail() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var userDetail *eu.UserDetail
+		var userDetail *ent.UserDetail
 		if err := e.Bind(&userDetail); err != nil {
 			return echo.NewHTTPError(http.StatusBadRequest, map[string]interface{}{
 				"message": "Invalid Request Body",
@@ -90,7 +90,7 @@ func (UserDetailHandler *Handler) CreateUserDetail() echo.HandlerFunc {
 
 func (UserDetailHandler *Handler) UpdateUserDetail() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var userDetail *eu.UserDetail
+		var userDetail *ent.UserDetail
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -127,7 +127,7 @@ func (UserDetailHandler *Handler) UpdateUserDetail() echo.HandlerFunc {
 
 func (UserDetailHandler *Handler) DeleteUserDetail() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		var userDetail *eu.UserDetail
+		var userDetail *ent.UserDetail
 		id, err := strconv.Atoi(e.Param("id"))
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, map[string]interface{}{

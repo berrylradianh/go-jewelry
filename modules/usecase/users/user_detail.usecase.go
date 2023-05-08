@@ -1,25 +1,25 @@
 package users
 
 import (
-	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
+	e "github.com/berrylradianh/go-jewelry/modules/entity"
 )
 
-func (userUsecase *Usecase) GetAllUserDetails() (*[]eu.UserDetail, error) {
+func (userUsecase *Usecase) GetAllUserDetails() (*[]e.UserDetail, error) {
 	userDetails, err := userUsecase.Repository.GetAllUserDetails()
 	return userDetails, err
 }
 
-func (userUsecase *Usecase) GetUserDetailById(id int) (*eu.UserDetail, error) {
+func (userUsecase *Usecase) GetUserDetailById(id int) (*e.UserDetail, error) {
 	userDetail, err := userUsecase.Repository.GetUserDetailById(id)
 	return userDetail, err
 }
 
-func (userUsecase *Usecase) CreateUserDetail(userDetail *eu.UserDetail) error {
+func (userUsecase *Usecase) CreateUserDetail(userDetail *e.UserDetail) error {
 	err := userUsecase.Repository.CreateUserDetail(userDetail)
 	return err
 }
 
-func (userUsecase *Usecase) UpdateUserDetail(id int, userDetail *eu.UserDetail) error {
+func (userUsecase *Usecase) UpdateUserDetail(id int, userDetail *e.UserDetail) error {
 	result := userUsecase.Repository.UpdateUserDetail(id, userDetail)
 	return result
 }

@@ -1,13 +1,14 @@
 package auth
 
 import (
-	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
+	e "github.com/berrylradianh/go-jewelry/modules/entity"
 )
 
-func (authRepo *Repository) LoginUser(email string) (*eu.User, error) {
-	var user eu.User
-	// result := repo.DB.Preload("Blogs", "deleted_at IS NULL").Find(&users)
-	result := authRepo.DB.Where("email = ?", email).First(&user)
+func (authRepo *Repository) LoginUser(email string) (*e.User, error) {
+	var user e.User
+	if err := authRepo.DB.Where("email = ?", email).First(&user).Error; err != nil {
+		return nil, err
+	}
 
-	return &user, result.Error
+	return &user, nil
 }

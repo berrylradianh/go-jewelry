@@ -1,11 +1,12 @@
 package auth
 
 import (
-	eu "github.com/berrylradianh/go-jewelry/modules/entity/users"
+	e "github.com/berrylradianh/go-jewelry/modules/entity"
 	svc "github.com/berrylradianh/go-jewelry/modules/services"
 )
 
-func (authUsecase *Usecase) RegisterUser(user *eu.User) error {
+func (authUsecase *Usecase) RegisterUser(user *e.User) error {
+	user.Role_id = 2
 	hashedPassword, err := svc.HashPassword(user.Password)
 	if err != nil {
 		return err

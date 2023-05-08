@@ -1,4 +1,4 @@
-package users
+package entity
 
 import (
 	// eu "github.com/berrylradianh/go-jewelry/modules/entity/users"

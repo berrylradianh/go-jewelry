@@ -19,4 +19,6 @@ jobs:
         script: |
           cd app
           git pull origin master
+          berrylradianh
+          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
           docker compose up -d --build

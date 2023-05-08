@@ -196,7 +196,7 @@ func (productHandler *Handler) SortProducts() echo.HandlerFunc {
 	}
 }
 
-func (productHandler *Handler) FilterProductsByMaterial() echo.HandlerFunc {
+func (productHandler *Handler) FilterProducts() echo.HandlerFunc {
 	return func(e echo.Context) error {
 		productMaterial := e.QueryParam("material")
 

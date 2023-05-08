@@ -18,6 +18,7 @@ type Product struct {
 	Product_material    ProductMaterialResponse     `gorm:"foreignKey:Product_material_id"`
 	Product_description ProductDescriptionResponse  `gorm:"foreignKey:Product_id "`
 	Transaction_details []TransactionDetailResponse `gorm:"foreignKey:Product_id"`
+	Carts               []CartResponse              `gorm:"foreignKey:Product_id"`
 }
 
 type ProductResponse struct {
@@ -30,6 +31,7 @@ type ProductResponse struct {
 	Product_material_id uint                 `json:"-"`
 	Product_description []ProductDescription `gorm:"foreignKey:Product_id  " json:"-"`
 	Transaction_details []TransactionDetail  `gorm:"foreignKey:Product_id" json:"-"`
+	Carts               []Cart               `gorm:"foreignKey:Product_id" json:"-"`
 }
 
 func (ProductResponse) TableName() string {

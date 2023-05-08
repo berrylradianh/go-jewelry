@@ -8,7 +8,7 @@ import (
 
 func (productRepo *Repository) GetAllProducts() (*[]e.Product, error) {
 	var products []e.Product
-	if err := productRepo.DB.Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Find(&products).Error; err != nil {
+	if err := productRepo.DB.Preload("Carts", "deleted_at IS NULL").Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Find(&products).Error; err != nil {
 		return nil, err
 	}
 
@@ -17,7 +17,7 @@ func (productRepo *Repository) GetAllProducts() (*[]e.Product, error) {
 
 func (productRepo *Repository) GetProductById(id int) (*e.Product, error) {
 	var product e.Product
-	if err := productRepo.DB.Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").First(&product, id).Error; err != nil {
+	if err := productRepo.DB.Preload("Carts", "deleted_at IS NULL").Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").First(&product, id).Error; err != nil {
 		return nil, err
 	}
 
@@ -59,7 +59,7 @@ func (productRepo *Repository) DeleteProduct(id int) error {
 
 func (productRepo *Repository) SortProductByNameASC() (*[]e.Product, error) {
 	var products []e.Product
-	if err := productRepo.DB.Order("name").Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Find(&products).Error; err != nil {
+	if err := productRepo.DB.Order("name").Preload("Carts", "deleted_at IS NULL").Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Find(&products).Error; err != nil {
 		return nil, err
 	}
 
@@ -68,7 +68,7 @@ func (productRepo *Repository) SortProductByNameASC() (*[]e.Product, error) {
 
 func (productRepo *Repository) SortProductByNameDESC() (*[]e.Product, error) {
 	var products []e.Product
-	if err := productRepo.DB.Order("name DESC").Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Find(&products).Error; err != nil {
+	if err := productRepo.DB.Order("name DESC").Preload("Carts", "deleted_at IS NULL").Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Find(&products).Error; err != nil {
 		return nil, err
 	}
 
@@ -77,7 +77,7 @@ func (productRepo *Repository) SortProductByNameDESC() (*[]e.Product, error) {
 
 func (productRepo *Repository) SortProductByDateASC() (*[]e.Product, error) {
 	var products []e.Product
-	if err := productRepo.DB.Order("created_at").Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Find(&products).Error; err != nil {
+	if err := productRepo.DB.Order("created_at").Preload("Carts", "deleted_at IS NULL").Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Find(&products).Error; err != nil {
 		return nil, err
 	}
 
@@ -86,7 +86,7 @@ func (productRepo *Repository) SortProductByDateASC() (*[]e.Product, error) {
 
 func (productRepo *Repository) SortProductByDateDESC() (*[]e.Product, error) {
 	var products []e.Product
-	if err := productRepo.DB.Order("created_at DESC").Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Find(&products).Error; err != nil {
+	if err := productRepo.DB.Order("created_at DESC").Preload("Carts", "deleted_at IS NULL").Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Find(&products).Error; err != nil {
 		return nil, err
 	}
 
@@ -95,7 +95,7 @@ func (productRepo *Repository) SortProductByDateDESC() (*[]e.Product, error) {
 
 func (productRepo *Repository) FilterProductsByMaterial(productMaterial string) (*[]e.Product, error) {
 	var products []e.Product
-	if err := productRepo.DB.Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Where("product_material_id IN (SELECT id FROM product_materials WHERE name = ?)", productMaterial).Find(&products).Error; err != nil {
+	if err := productRepo.DB.Preload("Carts", "deleted_at IS NULL").Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Where("product_material_id IN (SELECT id FROM product_materials WHERE name = ?)", productMaterial).Find(&products).Error; err != nil {
 		return nil, err
 	}
 
@@ -104,7 +104,7 @@ func (productRepo *Repository) FilterProductsByMaterial(productMaterial string) 
 
 func (productRepo *Repository) FilterProductsByCategory(productCategory string) (*[]e.Product, error) {
 	var products []e.Product
-	if err := productRepo.DB.Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Where("product_category_id IN (SELECT id FROM product_categories WHERE name = ?)", productCategory).Find(&products).Error; err != nil {
+	if err := productRepo.DB.Preload("Carts", "deleted_at IS NULL").Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Where("product_category_id IN (SELECT id FROM product_categories WHERE name = ?)", productCategory).Find(&products).Error; err != nil {
 		return nil, err
 	}
 
@@ -114,7 +114,7 @@ func (productRepo *Repository) FilterProductsByCategory(productCategory string) 
 func (productRepo *Repository) SearchProductsByName(productName string) (*[]e.Product, error) {
 	var products []e.Product
 
-	if err := productRepo.DB.Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Where("name LIKE ?", "%"+productName+"%").Find(&products).Error; err != nil {
+	if err := productRepo.DB.Preload("Carts", "deleted_at IS NULL").Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Where("name LIKE ?", "%"+productName+"%").Find(&products).Error; err != nil {
 		return nil, err
 	}
 
@@ -124,7 +124,7 @@ func (productRepo *Repository) SearchProductsByName(productName string) (*[]e.Pr
 func (productRepo *Repository) SearchProductsByCategory(productCategory string) (*[]e.Product, error) {
 	var products []e.Product
 
-	if err := productRepo.DB.Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Where("product_category_id IN (SELECT id FROM product_categories WHERE name = ?)", productCategory).Find(&products).Error; err != nil {
+	if err := productRepo.DB.Preload("Carts", "deleted_at IS NULL").Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Where("product_category_id IN (SELECT id FROM product_categories WHERE name = ?)", productCategory).Find(&products).Error; err != nil {
 		return nil, err
 	}
 

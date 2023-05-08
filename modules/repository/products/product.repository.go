@@ -59,7 +59,7 @@ func (productRepo *Repository) DeleteProduct(id int) error {
 
 func (productRepo *Repository) SortProductByNameASC() (*[]e.Product, error) {
 	var products []e.Product
-	if err := productRepo.DB.Order("name").Find(&products).Error; err != nil {
+	if err := productRepo.DB.Order("name").Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Find(&products).Error; err != nil {
 		return nil, err
 	}
 
@@ -68,7 +68,7 @@ func (productRepo *Repository) SortProductByNameASC() (*[]e.Product, error) {
 
 func (productRepo *Repository) SortProductByNameDESC() (*[]e.Product, error) {
 	var products []e.Product
-	if err := productRepo.DB.Order("name DESC").Find(&products).Error; err != nil {
+	if err := productRepo.DB.Order("name DESC").Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Find(&products).Error; err != nil {
 		return nil, err
 	}
 
@@ -77,7 +77,7 @@ func (productRepo *Repository) SortProductByNameDESC() (*[]e.Product, error) {
 
 func (productRepo *Repository) SortProductByDateASC() (*[]e.Product, error) {
 	var products []e.Product
-	if err := productRepo.DB.Order("created_at").Find(&products).Error; err != nil {
+	if err := productRepo.DB.Order("created_at").Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Find(&products).Error; err != nil {
 		return nil, err
 	}
 
@@ -86,7 +86,7 @@ func (productRepo *Repository) SortProductByDateASC() (*[]e.Product, error) {
 
 func (productRepo *Repository) SortProductByDateDESC() (*[]e.Product, error) {
 	var products []e.Product
-	if err := productRepo.DB.Order("created_at DESC").Find(&products).Error; err != nil {
+	if err := productRepo.DB.Order("created_at DESC").Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Find(&products).Error; err != nil {
 		return nil, err
 	}
 

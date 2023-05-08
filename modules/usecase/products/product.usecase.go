@@ -72,3 +72,11 @@ func (productUsecase *Usecase) FilterProductsByMaterial(productMaterial string) 
 	}
 	return products, nil
 }
+
+func (productUsecase *Usecase) FilterProductsByCategory(productCategory string) (*[]e.Product, error) {
+	products, err := productUsecase.Repository.FilterProductsByCategory(productCategory)
+	if err != nil {
+		return nil, err
+	}
+	return products, nil
+}

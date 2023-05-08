@@ -228,16 +228,35 @@ func (productHandler *Handler) FilterProducts() echo.HandlerFunc {
 	}
 }
 
-func (productHandler *Handler) SearchProductsByName() echo.HandlerFunc {
+func (productHandler *Handler) SearchProducts() echo.HandlerFunc {
 	return func(e echo.Context) error {
-		productName := e.QueryParam("name")
-		if productName == "" {
-			return e.JSON(http.StatusBadRequest, map[string]interface{}{
-				"message": "Product name is required",
+		var products *[]ent.Product
+		var err error
+
+		param := e.QueryParam("param")
+		switch param {
+		case "name":
+			productName := e.QueryParam("name")
+			if productName == "" {
+				return e.JSON(http.StatusBadRequest, map[string]interface{}{
+					"message": "Product name is required",
+				})
+			}
+			products, err = productHandler.Usecase.SearchProductsByName(productName)
+		case "category":
+			productCategory := e.QueryParam("category")
+			if productCategory == "" {
+				return e.JSON(http.StatusBadRequest, map[string]interface{}{
+					"message": "Product category is required",
+				})
+			}
+			products, err = productHandler.Usecase.SearchProductsByCategory(productCategory)
+		default:
+			return e.JSON(http.StatusBadRequest, echo.Map{
+				"message": "Invalid filter parameter",
 			})
 		}
 
-		products, err := productHandler.Usecase.SearchProductsByName(productName)
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, echo.Map{
 				"message": err.Error(),

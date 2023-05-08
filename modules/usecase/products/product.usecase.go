@@ -64,3 +64,11 @@ func (productUsecase *Usecase) SortProducts(sortBy string, sortOrder string) (*[
 	}
 	return nil, fmt.Errorf("invalid field for sorting or invalid sort order")
 }
+
+func (productUsecase *Usecase) FilterProductsByMaterial(productMaterial string) (*[]e.Product, error) {
+	products, err := productUsecase.Repository.FilterProductsByMaterial(productMaterial)
+	if err != nil {
+		return nil, err
+	}
+	return products, nil
+}

@@ -92,3 +92,12 @@ func (productRepo *Repository) SortProductByDateDESC() (*[]e.Product, error) {
 
 	return &products, nil
 }
+
+func (productRepo *Repository) FilterProductsByMaterial(productMaterial string) (*[]e.Product, error) {
+	var products []e.Product
+	if err := productRepo.DB.Preload("Product_category", "deleted_at IS NULL").Preload("Product_material", "deleted_at IS NULL").Preload("Product_description", "deleted_at IS NULL").Preload("Transaction_details", "deleted_at IS NULL").Where("product_material_id IN (SELECT id FROM product_materials WHERE name = ?)", productMaterial).Find(&products).Error; err != nil {
+		return nil, err
+	}
+
+	return &products, nil
+}

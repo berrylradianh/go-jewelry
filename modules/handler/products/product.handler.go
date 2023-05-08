@@ -195,3 +195,21 @@ func (productHandler *Handler) SortProducts() echo.HandlerFunc {
 		})
 	}
 }
+
+func (productHandler *Handler) FilterProductsByMaterial() echo.HandlerFunc {
+	return func(e echo.Context) error {
+		productMaterial := e.QueryParam("material")
+
+		products, err := productHandler.Usecase.FilterProductsByMaterial(productMaterial)
+		if err != nil {
+			return e.JSON(http.StatusBadRequest, echo.Map{
+				"message": err.Error(),
+			})
+		}
+
+		return e.JSON(http.StatusOK, map[string]interface{}{
+			"message":  "Success Get All Products",
+			"products": products,
+		})
+	}
+}

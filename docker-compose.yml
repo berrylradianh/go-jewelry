@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:  
+  go-jewelry:
+    container_name: go-jewelry
+    build: .
+    ports: 
+      - 8080:8080
+    environment:
+      - DB_USERNAME=admin
+      - DB_PASSWORD=secret-password
+      - DB_NAME=go_jewelry
+      - DB_HOST=miniproject-alterra.cyqquc5i9ig7.ap-southeast-2.rds.amazonaws.com
+      - DB_PORT=3306
+    restart: on-failure

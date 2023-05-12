@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "go-jewelry",
+  "private_key_id": "aa910dcb0789bdded948dae5604725c2030bc18d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC9dWkALbXq6c68\nBsTnbjlrkJwKlFqEQOE0PbGaFD7I0PytqpQMhsLRDPzPmDzPVmZze47s9R9VX0es\nQupYRUiAxIdWstUuQcMypha3LajSNVpDAXywZPtO2R3kLieE7gEYc7mpVfFi/s+2\nj32/6QIdu75VZV+5ltXIt5yejRwtHkE3rmICgqlDeGdPdpkTeCXfrs11BBwGUea3\noqphBWZYVx4N1UTyVDB/+jhumg+/jUn8a0LbmwQTWFjPuxlcJyWIcMN8MXSKAvgV\nREZ4phbqARcZx6wqCMFJCYGFLseLgZ0i8A3KwRsRcnYKbPfZI4W4lPBpKrZb3M/1\nuTCkw/KtAgMBAAECggEABg2A9gQ/1lozZF7r/f/Pvk+/qHfeX3DKMRbSfHtumRBS\nLkMvmSnaAf9B+Wjh8nbObZySL6BSKLJTUh3OKlVGUHTW5Q5wEJsBvzW+ron7JYIW\nWOMshl8nhziZA5/028KVzt/tm8sW2+SLose5Sv8I9gW4OjazpPR8bn3tN0SHVKqf\nUZGGp4gvoj+cUzpMOV7DrW2Wg6R+p34nz49FPVgKMyP9qV8bwFnu1aS+Po7SWS/n\nkIfvsV1r6MKPBHliVJCWarGYtZWLLjH+ZAXJsuMIgMFnP/OR9j2gSg1oDJl+5Z6T\nnh4d3DcECOauZ/rr0m80HAwzEENFuimgyn/rXls22QKBgQD9S9jJC8bnF13x7brQ\nQJmNvfJz0RljXWaCdg8dsPTBxKBtmM6jO0HPzHWyJqyC4uROIenDGByhdJpdtW0/\njOq/r+C8uUPVJWqxFymhmTel9f3P8aZvmfY5ZUNFssnH3jAMxWwK7Y9tLCsCEmBe\nKHI+4ZahGaDFjnenntgXymQd5QKBgQC/ex8lOrv7ld3N5Lq4cyJykl+1SHV1v/W3\nfquRv3eeSea0NAHRUCkBWlgAe3TCoOajN3XjAkuUZE03GiH681iFmfWc6nOBSR/N\nNgUoqDLhGXA/zs3UUkE72O39ODVQe4cmValtmDgZMlABOwsBJat+gKJJ/yL93MnC\ngSiUR7P1KQKBgAkp7E7huTF1G/X7ts1/+M4y+AmOoA+DOokvwj49v60e8vrkE12+\ncBQXfo6SbZ1SnhXhjjZ7sdV5hXgsbyZkb729nDDXtweIEgMUJnJtO6EqdCNIx8+z\nzz+mVTe5TymG9VAQ+Gawz4aQmYG6rnfZmMCDotJzPejHzbZnvcOmk9atAoGASkaq\nSDjGXss9pPaK763JuQPKmHmpBqoV2L4MM5dAAWjNUy2xXs5neZzf8h/xpOXhUYLb\n+dkUFFXsFenPMJdgyUJ1og7YC1igO2wvCBxm0CacAkRoV2oo39xARS+ejr+8J0Sn\nWlnnuO5pVnDeze0c3w9q5KVRn4Qbx5VudkZyKjECgYAYGZ8pgE643MeHnbcfwHwW\ndbWwMPHrjf92XvP2VDwBbtgjtB9Vye6qsSASVzlFDZFJcvGZOf11jSYvOyyjK7Dm\nVV7JP3XVjiEovxaNxj5vGXwqeX1kJCNyWAM3H60dUJ6r4GR5DjXBDq2+hx74oEIo\n9TLk/pxkTx5rCkrhC7LB0A==\n-----END PRIVATE KEY-----\n",
+  "client_email": "go-jewelry-buckets@go-jewelry.iam.gserviceaccount.com",
+  "client_id": "112923776952290461661",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/go-jewelry-buckets%40go-jewelry.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
